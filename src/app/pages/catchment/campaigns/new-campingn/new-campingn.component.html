@@ -1,0 +1,170 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto bg-white" cdkScrollable>
+    <div class="return-header">
+        <mat-icon svgIcon="mat_solid:arrow_back" (click)="toBack()"></mat-icon>
+        <p class="titulo-modal form-padding-title">{{ url.includes('editar') ? 'Editar' : url.includes('clonar') ?
+            'Clonar' : 'Registrar
+            nueva' }} campaña</p>
+    </div>
+
+    <div class="row form-padding d-flex">
+        <p class="mb-6">*Campos obligatorios</p>
+        <form class="col-12" [formGroup]="formData">
+            <div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Código</mat-label>
+                            <input formControlName="campaign_code" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Tipo</mat-label>
+                            <mat-select formControlName="campaign_type" placeholder="Seleccionar">
+                                <mat-option [value]="cat.campaign_type_id" (click)="objcampaingType = cat;"
+                                    *ngFor="let cat of catTypes">{{cat?.campaign_type_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Agentes</mat-label>
+                            <mat-select formControlName="users" multiple>
+                                <mat-option [value]="cat.id" *ngFor="let cat of catalogAgents">{{cat.first_name
+                                    && cat.last_name ? cat?.first_name + ' ' + cat?.last_name : cat?.username |
+                                    titlecase }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Nombre de campaña</mat-label>
+                            <input formControlName="campaign_name" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Agente encargado</mat-label>
+                            <mat-select formControlName="owner_user" placeholder="Seleccionar">
+                                <mat-option [value]="cat.id" *ngFor="let cat of catalogAgents">{{cat.first_name
+                                    && cat.last_name ? cat?.first_name + ' ' + cat?.last_name : cat?.username |
+                                    titlecase }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Soluciones</mat-label>
+                            <mat-select formControlName="solutions" multiple>
+                                <mat-option [value]="cat.solution_id"
+                                *ngFor="let cat of catalogSolutions">{{cat?.solution_name ||
+                                '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Monto invertido</mat-label>
+                            <input (input)="configInput($event, 'amount_invested')" formControlName="amount_invested" class="text-right" matInput>
+                            <span matPrefix>$</span>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Periodo</mat-label>
+                            <mat-date-range-input [rangePicker]="campaignOnePicker"
+                                [comparisonStart]="" [comparisonEnd]="">
+                                <input matStartDate formControlName="start_date" placeholder="Inicio" />
+                                <input matEndDate formControlName="end_date" placeholder="Final" />
+                            </mat-date-range-input>
+
+                            <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Descripción</mat-label>
+                            <textarea formControlName="description" matInput style="height: 100px;"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <form [formGroup]="formCompanies" class="mt-5">
+                    <div class="inputNewRegister">
+                        <mat-label>Empresas*</mat-label>
+                    </div>
+
+                    <mat-radio-group class="d-flex row mb-3" formControlName="radioOption">
+                        <div class="col-md-6">
+                          <mat-radio-button class="mb-2" value="excepto" (change)="onRadioChange('excepto')">
+                            <span class="font-14-500-4B5062">Todas las empresas excepto las marcadas</span>
+                          </mat-radio-button>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-radio-button class="mb-2" value="solo" (change)="onRadioChange('solo')">
+                            <span class="font-14-500-4B5062">Ninguna empresa solo las marcadas</span>
+                          </mat-radio-button>
+                        </div>
+                      </mat-radio-group>
+                      
+                    <div class="row">
+                        <div class="col-12">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-select formControlName="companies" multiple placeholder="Seleccionar">
+                                    <mat-option [value]="cat.company_id" *ngFor="let cat of catalogCompanies">{{cat?.company_name || '-'}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+
+                <div>
+                    <div class="row mb-3">
+                        <div class="section-header-modal">
+                            Establecer metas
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Total de empresas a alcanzar</mat-label>
+                                <input formControlName="goal_total_companies" type="number" min="0" matInput>
+                            </mat-form-field>
+
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Cantidad de respuestas</mat-label>
+                                <input formControlName="goal_total_responses" type="number" min="0" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Cantidad de cotizaciones</mat-label>
+                                <input formControlName="goal_number_quotes" type="number" min="0" matInput>
+                            </mat-form-field>
+
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Monto total</mat-label>
+                                <input (input)="configInput($event, 'goal_amount')" class="text-right" formControlName="goal_amount" type="text" matInput>
+                                <span matPrefix>$</span>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Cantidad de cierres de venta</mat-label>
+                                <input formControlName="goal_number_sales" type="number" min="0" matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-end align-items-center mb-3 mt-5">
+                    <div class="d-flex justify-content-end col-md-3 col-xl-3 col-12 pt-md-2 mt-6">
+                        <button class="btn-action-add" [disabled]="canSave" (click)="actionSave()">
+                            <span>Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

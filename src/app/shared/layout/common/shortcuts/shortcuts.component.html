@@ -1,0 +1,26 @@
+<button
+    mat-icon-button
+    (click)="openPanel()"
+    #shortcutsOrigin>
+    <mat-icon class="color-icon-header" [svgIcon]="'heroicons_outline:squares-plus'"></mat-icon>
+</button>
+
+<ng-template #shortcutsPanel>
+            <div class="menu-bar">
+                <ul>
+                    <li class="border-top"><a>Cotización</a>
+                        <div class="dropdown-menu p-0">
+                        <ul>
+                            <li><a (click)="goUrl('newProspect')">Para nuevos prospectos</a></li>
+                            <li><a (click)="goUrl('newClient')">Para LEAD / Cliente</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a (click)="goUrl('all')">Empresa/cliente</a></li>
+                <li><a (click)="goUrl('campaign')">Campaña</a></li>
+                <li><a (click)="goUrl('users')">Usuario</a></li>
+                <li class="border-bottom"><a (click)="goUrl('products')">Producto</a></li>
+            </ul>
+        </div>
+</ng-template>
+

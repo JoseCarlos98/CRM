@@ -1,0 +1,47 @@
+<div class="container-fluid p-0 overflow-hidden">
+
+    <div class="modal-header">
+        <p class="titulo-modal">{{ data?.info ? 'Editar' : 'Registrar nueva'}}</p>
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row p-5 d-flex">
+        <p class="mb-6">*Campos obligatorios</p>
+
+        <form class="col-12 modal-content-scroll">
+            <div class="row">
+                <div class="col-md-6" >
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister" *ngIf="data.type == 'origin'">
+                        <mat-label>Origen</mat-label>
+                        <input [formControl]="originName" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister" *ngIf="data.type == 'business'">
+                        <mat-label>Giro</mat-label>
+                        <input [formControl]="businessName" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister" *ngIf="data.type == 'size'">
+                        <mat-label>Tamaño</mat-label>
+                        <input [formControl]="sizeName" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister" *ngIf="data.type == 'clientType'">
+                        <mat-label>Tipo cliente</mat-label>
+                        <input [formControl]="typeName" matInput>
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-end">
+                <div class="d-flex justify-content-end col-md-2 col-xl-2 col-12 pt-md-2">
+                    <button class="btn-action-add" (click)="actionSave()">
+                        <span>Guardar</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

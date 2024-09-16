@@ -1,0 +1,73 @@
+<div class="container-fluid p-0 overflow-hidden c-modal-quotes">
+
+    <div class="modal-header">
+        <p class="titulo-modal">{{ objEditData ? 'Editar' : 'Registrar nuevo'}} producto</p>
+
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row p-5 d-flex">
+
+        <p class="mb-6">*Campos obligatorios</p>
+
+        <form class="col-12 modal-content-scroll" [formGroup]="formData">
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Código</mat-label>
+                            <input formControlName="code" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Precio</mat-label>
+                            <input formControlName="list_price" class="text-right" matInput type="number">
+                            <span matPrefix>$</span>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>País</mat-label>
+                            <mat-select formControlName="country" placeholder="Seleccionar">
+                                <mat-option [value]="cat.country_id" *ngFor="let cat of catCountries">{{cat?.country_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Nombre del producto</mat-label>
+                            <input formControlName="name" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Categoría</mat-label>
+                            <mat-select formControlName="product_category" placeholder="Seleccionar">
+                                <mat-option [value]="cat.product_category_id" *ngFor="let cat of catProductCategories">{{cat?.category_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Link</mat-label>
+                            <input formControlName="link" matInput>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Estatus</mat-label>
+                            <mat-select formControlName="status_id" placeholder="Seleccionar">
+                                <mat-option [value]="'1'">Estatus 1</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-end create">
+                    <div class="d-flex justify-content-end col-md-2 col-xl-2 col-12 pt-md-2">
+                        <button class="btn-action-add" (click)="actionSave()">
+                            <span>Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

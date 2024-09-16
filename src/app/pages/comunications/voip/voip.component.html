@@ -1,0 +1,79 @@
+<div class="container" style="display: flex; justify-content: center">
+    <div style="flex-basis: 80%; padding: 20px;">
+        <div id="login-form" style="display: none; margin: 50px 0 50px 0;">
+            <form class="row g-3">
+                <div class="col-sm-2 text-end">
+                    <button id="login" class="btn-yellow-newRegister">
+                        <span>Conectar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="phone" style="display: none;">
+            <div style="text-align: right;">
+                <button id="logout" type="button" class="btn-action-red">
+                    <span>Desconectar</span>
+                </button>
+            </div>
+            <div style="padding: 40px 0px;">
+                <div id="dial">
+                    <h4>Marcar</h4>
+                    <form class="row g-2">
+                    <div class="col-sm-9">
+                        <input id="dial-number" type="text" name="number" class="form-control" placeholder="Ingrese número a llamar ejemplo (+525526110700)" [(ngModel)]="phone" />
+                    </div>
+                    <div class="col-sm-2 text-end">
+                        <button id="call" type="button" class="btn-action-green">
+                            <span>Llamar</span>
+                        </button>
+                    </div>
+                </form>
+                </div>
+                <div id="ringing" style="display: none;">
+                    <h4>Llamada entrante</h4>
+                    <div>
+                        <button id="answer" type="button" class="btn-action-green">
+                            <span>Responder</span>
+                        </button>
+                        <button id="reject" type="button" class="btn-action-red">
+                            <span>Colgar</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="connecting" style="display: none;">
+                    <h4>Llamando</h4>
+                    <div>
+                        <button id="cancel" type="button" class="btn-action-red">
+                            <span>Colgar</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="connected" style="display: none;">
+                    <h4>En Llamada</h4>
+                    <div>
+                        <button id="hold" type="button" class="btn btn-warning pull-right">Poner en espera</button>
+                        <button id="unhold" type="button" class="btn btn-warning pull-right" style="display: none;">Regresar a llamada</button>
+                        <button id="mute" type="button" class="btn btn-warning pull-right">Silenciar</button>
+                        <button id="unmute" type="button" class="btn btn-warning pull-right" style="display: none;">Reactivar</button>
+                        <button id="hangup" type="button" class="btn-action-red">
+                            <span>Colgar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="events" style="margin-top: 20px; display: none">
+            <div>Log</div>
+            <div id="log-wrapper" style="max-height: 230px; overflow-y: auto;">
+                <div id="log" style="font-size: 10px; background-color: #f5f5f5;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="padding: 20px;">
+        <iframe id="embedded-softphone" src="https://voipstudio.com/webphone/" allow="microphone" width="300" height="550"></iframe>
+    </div>
+</div>

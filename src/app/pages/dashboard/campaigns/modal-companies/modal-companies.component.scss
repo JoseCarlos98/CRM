@@ -1,0 +1,57 @@
+
+.c-moda-info {
+    .contenedor-scroll-tabla {
+        overflow:  scroll!important;
+        height: 700px;
+        padding-right: 0;
+        position: relative;
+    }
+
+    .tabla-personalizada-default {
+        th {
+            background: #1E293B!important;
+            height: 80px;
+        }
+    
+    }
+    .modal-icon {
+        cursor: pointer;
+        position: absolute; 
+        top: 15px; 
+        right: 15px; 
+        color: #EDF1F5;
+    }
+
+    .table-column-contact {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+.text-all {
+    font-size: 16px;
+    margin-top: 10px!important;
+    font-weight: 700;
+    color: #3487E9;
+    border-bottom: 1.5px solid #3487E9;
+    margin: auto;
+}
+
+.modal-lead {
+    margin: auto;
+    width: 100px;
+}
+
+.modal-contact {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.closetComapny {
+
+}

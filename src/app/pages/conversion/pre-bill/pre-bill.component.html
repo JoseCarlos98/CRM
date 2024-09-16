@@ -1,0 +1,171 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto bg-white c-pre-bill" cdkScrollable>
+  <div class="return-header">
+    <mat-icon svgIcon="mat_solid:arrow_back" (click)="billing()"></mat-icon>
+    
+    <!-- <mat-icon svgIcon="mat_solid:arrow_back" (click)="toBack()"></mat-icon> -->
+    <p class="titulo-modal form-padding-title">Pre-Factura</p>
+  </div>
+
+  <div class="row form-padding d-flex">
+
+    <div class="col-md-4">
+      <div class="c-logo">
+        <img class="logo-login" src="../../../../assets/images/logo/logo-login-crm.png" alt="">
+      </div>
+      <div class="format-text-titles mt-3">
+        <div>
+          <h1>Nombre:</h1>
+          <h2>{{objData?.companyName?.name || '-'}}</h2>
+        </div>
+      </div>
+      <div class="format-text-titles mt-3">
+        <div>
+          <h1>Uso de CFDI:</h1>
+          <h2>{{objData?.companyInfo?.cfdi || '-'}}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="content-two">
+        <h1>Abrevius, S. A. de C.V.</h1>
+        <h1>ABR170915L36</h1>
+        <h1>AV. ECONOMOS 6271 Col. RINCONADA DEL PARQUE</h1>
+        <h1>Zapopan Zapopan, Jalisco, México C.P. 45030</h1>
+        <h1>{{'administracion@abrevius.com'}}</h1>
+        <h1>Tel. (55) 12 09 06 53</h1>
+      </div>
+
+      <div class="format-text-titles mt-3">
+        <div>
+          <h1>RFC:</h1>
+          <h2>{{objData?.companyInfo?.tax_id_number || '-'}}</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-4">
+      <div class="format-text-titles">
+        <div>
+          <h1>Folio Fiscal:</h1>
+          <h2>N/A</h2>
+        </div>
+        <div>
+          <h1>Serie y Folio:</h1>
+          <h2>A - N/A</h2>
+        </div>
+        <div>
+          <h1>Regimen Fiscal:</h1>
+          <h2>-</h2>
+        </div>
+        <div>
+          <h1>Fecha y hora de emisión:</h1>
+          <h2>{{dateBill}}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 mt-5">
+      <div class="colum-tabla-tabla-content">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Clave SAT</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Código</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Unidad</th>
+              <th scope="col">P. Unitario</th>
+              <th scope="col">Importe</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of objData?.products[0]?.productsOptions">
+              <td>80101500</td>
+              <td>{{product.places}}</td>
+              <td>-</td>
+              <td>{{product.description}}</td>
+              <td>E48 Servicios</td>
+              <td>{{product.unitPrice}}</td>
+              <td>{{product.total}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-12 mt-3 mb-2">
+      <div class="iva-content">
+        <h1>002 IVA Traslado</h1>
+        <h1>Tasa 16%</h1>
+        <h1>$13.79</h1>
+      </div>
+    </div>
+
+    <div class="col-md-12 mt-5 contet-footer">
+      <div class="row">
+        <div class="col-md-4 pt-5">
+          <div >
+            <h1>Cantidad con letra</h1>
+            <h2>Expendida en: <span>45030</span></h2>
+          </div>
+          <div>
+            <h1>Comentario: <span>{{objData?.comments || '-'}}</span></h1>
+          </div>
+          <div>
+            <h2>Método de Pago: <span>{{objData?.companyInfo?.paymentMethod || '-'}}</span></h2>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <h3 >CIEN PESOS 00/100 MXN</h3>
+
+          <div>
+            <h1>Forma de pago:</h1>
+            <span>{{objData?.companyInfo?.waytoPay || '-'}}</span>
+          </div>
+          <div>
+            <h1>Cuenta de Pago:</h1>
+            <span>-</span>
+          </div>
+        </div>
+
+        <div class="col-md-3 pt-4">
+          <div class="prices">
+
+            <div>
+              <h1>Subtotal</h1>
+              <span>{{objData?.products[0].subtotal}}</span>
+            </div>
+
+            <div>
+              <h1>Descuento</h1>
+              <span>{{objData?.products[0].discount}}</span>
+            </div>
+
+            <div>
+              <h1>IVA 16%</h1>
+              <span>{{objData?.products[0].iva}}</span>
+            </div>
+
+            <div>
+              <h1>Total</h1>
+              <span>{{objData?.products[0].totalBill}}</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 d-flex justify-content-end mt-5">
+      <div class="d-flex justify-content-end col-md-2 col-xl-2 col-12 pt-md-2">
+        <button class="btn-action-add" (click)="actionSave()">
+          <span>Facturar</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.c-call {
+
+    .c-scroll {
+        height: 600px;
+        overflow: auto;
+    }
+
+    .failed-call {
+        color: white;
+        background: #008525;
+    }
+    
+    .call-answered {
+        color: white;
+        background: #FF0000;
+    }
+
+
+    .call-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #646878;
+    }
+
+    .call-agent {
+        font-size: 14px;
+        font-weight: 700;
+        color: #646878;
+        margin-top: 5px;
+    }
+
+    .call-comment {
+        // width: 261px;
+        // min-height: 78px;
+        height: auto;
+        top: 200px;
+        left: 126px;
+        padding: 5px 9px 52px 9px;
+        border-radius: 10px;
+        background: #FFFFFF;
+        box-shadow: -1px 4px 10px 0px #00000040;
+        font-size: 14px;
+        font-weight: 400;
+        text-align: left;
+        text-align: left;
+        color: #646878;
+    }
+}

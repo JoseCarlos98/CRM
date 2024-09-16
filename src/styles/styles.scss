@@ -1,4 +1,373 @@
-/* ----------------------------------------------------------------------------------------------------- */
-/*  @ Import/write your custom styles here.
-/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
-/* ----------------------------------------------------------------------------------------------------- */
+@import 'general_variables.scss';
+@import 'table.scss';
+
+body {
+	margin: 0!important;
+    font-family: 'Poppins', sans-serif!important;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body abrevia-splash-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #4B5062;
+    color: #F9FAFB;
+    z-index: 999999;
+    pointer-events: none;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body abrevia-splash-screen img {
+    width: 120px;
+    max-width: 120px;
+}
+
+body abrevia-splash-screen .spinner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    width: 56px;
+}
+
+body abrevia-splash-screen .spinner > div {
+    width: 12px;
+    height: 12px;
+    background-color: #F1E00E;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: fuse-bouncedelay 1s infinite ease-in-out both;
+    animation: fuse-bouncedelay 1s infinite ease-in-out both;
+}
+
+body abrevia-splash-screen .spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+body abrevia-splash-screen .spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes fuse-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0)
+    }
+    40% {
+        -webkit-transform: scale(1.0)
+    }
+}
+
+@keyframes fuse-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+    40% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+    }
+}
+
+body:not(.abrevia-splash-screen-hidden) {
+    overflow: hidden;
+}
+
+body.abrevia-splash-screen-hidden abrevia-splash-screen {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.header-content {
+    margin-bottom: 30px;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heigth-100 {
+    height: 100%!important;
+} 
+
+.width-100 {
+    width:  100%!important;
+} 
+
+// FONT-WEIGHT 
+
+.font-16-700-646878 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 21px;
+    color: #646878;
+}
+
+
+
+.inputNewaccordion {
+    .mat-expansion-panel-header-title {
+
+        font-size: 18px;
+        font-weight: 700!important;
+        color: #646878;
+    }
+
+    .mat-expansion-panel:not([class*=mat-elevation-z]) {
+        box-shadow: none!important;
+        border-bottom: 1.5px solid grey;
+    }
+
+   > .mat-expansion-panel {
+        border-bottom-left-radius: 0!important;
+        border-bottom-right-radius: 0!important;
+    }
+
+    .content-accordion {
+        margin-left: 100px;
+    }
+}
+
+.input-default {
+    mat-label {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 23px;
+        color: #646878;
+    } 
+}
+
+.font-14-500-4B5062 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #4B5062;
+}
+
+.section-padding {
+    padding: 0px 30px 0px 30px;
+}
+
+.section-padding-admin {
+    padding: 0px 20px 0px 20px;
+}
+
+.section-content-padding {
+    padding: 10px 50px!important;
+    position: relative;
+
+    .mat-mdc-paginator-page-size {
+		display: none!important;
+	}
+}
+
+.form-padding {
+    padding: 45px 50px!important;
+}
+
+@media screen and (max-width: 1390px) {
+
+    .section-padding {
+        padding: 0px 20px 0px 20px;
+    }
+
+    .section-content-padding {
+        padding: 30px 30px!important;
+    }
+    
+    .form-padding {
+        padding: 45px 75px!important;
+    }
+
+    .form-padding-title {
+        // margin-left: 5px;
+    }
+    
+
+}
+@media screen and (max-width: 875px) {
+
+    .form-padding {
+        padding: 45px!important;
+    }
+    
+    .btn-yellow-newRegister{
+        font-size: 14px!important;
+    }
+
+    .width-new-register {
+        width: unset!important;
+    }
+	
+    .show-icon {
+        display: block!important;
+    }
+
+    .menu-bar ul li:hover .dropdown-menu {
+        right: 99%!important;
+    }
+
+    .display-none-resposive {
+        display: none!important;
+    }
+}
+
+.cursos-pointer {
+    cursor: pointer;
+}
+
+
+
+.inputNewRegister {
+	width: 100%!important;
+    margin-bottom: 20px;
+
+	.mat-mdc-form-field-flex {
+		background: #F5F5F5 !important;
+	}
+
+    mat-label {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 21px;
+        color: #646878;
+    } 
+
+    button {
+        color:  rgb(40 40 40);
+    }
+
+    span {
+        color:  rgb(40 40 40);
+    }
+
+    > div:nth-child(1) {
+        box-shadow: 4px 4px 4px 0px #00000040!important;
+    }
+}
+
+
+.c-config {
+    padding: 15px 35px;
+
+    .bg-card {
+        height: auto;
+        // height: calc(100vh - 100px);
+    }
+  }
+
+.font-format-blue-light {
+    font-weight: 400!important;
+    line-height: 18px!important;
+    text-align: center!important;
+    color: #3487E9!important;
+    border-bottom: 1.5px solid #3487E9!important;
+    cursor: pointer;
+}
+
+.text-line-bottom {
+    width: auto!important;
+    font-size: 16px!important;
+    font-weight: 700!important;
+    color: #3487E9!important;
+    border-bottom: 1.5px solid #3487E9!important;
+    margin: auto!important;
+    width: 145px!important;
+}
+
+.menu-header {
+    button {
+        color: #385A6D;
+        font-family: 'Poppins', sans-serif!important;
+    }
+}
+
+
+.card-pipeline {
+    background: #FFFFFF;
+    box-shadow: 4px 4px 4px 0px #00000040;
+    border-radius: 20px;
+}
+
+.bg-4B5062 {
+    background-color: #4B5062!important;
+}
+
+.section-header-dashboard {
+    color: white;
+    text-align: center;
+    background: #646878 !important;
+    font-size: 18px;
+    font-weight: 600;
+    height: 37px;
+    border-radius: 10px;
+    margin-bottom: 26px;
+}
+
+.width-new-register {
+    width: 180px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.c-c-paginator {
+    position: relative;
+    background: white;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 110px;
+}
+
+.page-index {
+    width: 100px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.mdc-text-field--filled.mdc-text-field--disabled .mdc-text-field__input {
+    color: black!important;
+}
+
+.tap-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    height: 25px;
+
+    span {
+        font-size: 17px;
+        width: 60px;
+        font-weight: 600;
+        color: #4B5062;
+        cursor: pointer;
+}
+
+    span.selected {
+        border-bottom: 2px solid #4B5062; 
+    }
+}

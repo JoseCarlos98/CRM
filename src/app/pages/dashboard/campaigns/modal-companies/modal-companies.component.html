@@ -1,0 +1,68 @@
+<div class="container-fluid p-0 overflow-hidden">
+    <div class="modal-header d-flex justify-content-end">
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row d-flex">
+        <div class="col-12 contenedor-scroll-tabla">
+
+            <table mat-table #table [dataSource]="dataSource" class="w-100 tabla-personalizada-default-white">
+                <caption></caption>
+
+                <ng-container matColumnDef="company">
+                    <th mat-header-cell *matHeaderCellDef>Empresa</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="d-flex flex-column table-column-img text-center">
+                            <img src="../../../../assets/images/img-face.png" alt="">
+                            <span class="text-line-bottom">{{ element.company }}</span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="contact">
+                    <th mat-header-cell *matHeaderCellDef>Contacto</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="table-column-contact" *ngFor="let info of element.contact">
+                            <div>
+                                <mat-icon class="icon-size-6" matSuffix [svgIcon]="'heroicons_outline:user'"></mat-icon>
+                                <span> {{ info.nombre }} </span>
+                            </div>
+                            <div>
+                                <mat-icon class="icon-size-6" matSuffix [svgIcon]="'mat_outline:mail'"></mat-icon>
+                                <span> {{ info.email }} </span>
+                            </div>
+                            <div>
+                                <mat-icon class="icon-size-6" matSuffix [svgIcon]="'mat_outline:headphones'"></mat-icon>
+                                <span> {{ info.telefono }} </span>
+                            </div>
+                            <div>
+                                <mat-icon class="icon-size-6" matSuffix [svgIcon]="'mat_outline:phone_android'"></mat-icon>
+                                <span> {{ info.celular }} </span>
+                            </div>
+                            
+                            <span class="text-all">Ver todos</span>
+                        </div>
+                    </td>
+                    </ng-container>
+
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Estatus</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="table-column-lead modal-lead">
+                            {{ element.status }}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                        <h5 class="text-center my-5">No se encontraron resultados.</h5>
+                    </td>
+                </tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+    </div>
+</div>

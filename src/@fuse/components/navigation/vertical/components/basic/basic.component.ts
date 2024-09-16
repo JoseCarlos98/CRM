@@ -15,6 +15,13 @@ import { Subject, takeUntil } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
     imports        : [NgClass, NgIf, RouterLink, RouterLinkActive, MatTooltipModule, NgTemplateOutlet, MatIconModule],
+    styles         : [
+        `
+            .colorMenu {
+                color: #646878!important;
+            }
+        `
+    ]
 })
 export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestroy
 {

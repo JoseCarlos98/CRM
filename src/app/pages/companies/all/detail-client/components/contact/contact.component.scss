@@ -1,0 +1,36 @@
+.contact-content {
+    
+
+    p {
+        font-size: 16px;
+        font-weight: 700;
+        color: #646878;
+    }
+
+    .c-info-contact {
+        border-bottom: 1px solid #385A6D;
+        margin: 30px 0;
+
+            > div {
+                margin-bottom: 20px;
+
+                p {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #646878;
+                }
+                
+                span {
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #646878;
+                }
+            }
+
+    }
+}
+
+.c-scroll {
+    height: 600px;
+    overflow: auto;
+}

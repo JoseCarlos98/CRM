@@ -1,0 +1,146 @@
+<div class="container-fluid p-0 overflow-hidden">
+
+    <div class="modal-header">
+        <p class="titulo-modal">Facturar cotización - Cot # {{objEditData?.quoteNumber}}</p>
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row p-5 d-flex">
+        <form class="col-12 modal-content-scroll" [formGroup]="formData">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Nombre de la empresa (razón social)</mat-label>
+                            <input formControlName="company_name" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Selecciona forma de pago</mat-label>
+                            <mat-select formControlName="way_to_pay_id" placeholder="Seleccionar">
+                                <mat-option [value]="cat.way_to_pay_id" *ngFor="let cat of catWayToPay">{{
+                                    cat.way_to_pay_code }} - {{ cat?.way_to_pay_name || '-' }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>RFC</mat-label>
+                            <input formControlName="tax_id_number" maxlength="13" matInput
+                                pattern="^[a-zA-Z0-9]{12,13}$">
+                            <mat-error
+                                *ngIf="formData.get('tax_id_number').invalid && formData.get('tax_id_number').touched">
+                                RFC debe tener 12 o 13 caracteres
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Selecciona metodo de pago</mat-label>
+                            <mat-select formControlName="payment_method_id" placeholder="Seleccionar">
+                                <mat-option [value]="cat.payment_method_id"
+                                    *ngFor="let cat of catPaymentMethod">{{cat?.payment_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Selecciona el uso de CFDI</mat-label>
+                            <mat-select formControlName="invoice_use_id" placeholder="Seleccionar">
+                                <mat-option [value]="cat.invoice_use_id"
+                                    *ngFor="let cat of catInvoiceUse">{{cat?.invoice_use_code || '-'}} -
+                                    {{cat?.invoice_use_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Selecciona condicion de pago</mat-label>
+                            <mat-select formControlName="payment_condition_id" placeholder="Seleccionar">
+                                <mat-option [value]="cat.payment_condition_id"
+                                    *ngFor="let cat of catPaymentCondiction">{{cat?.payment_condition_name ||
+                                    '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12">
+                        <mat-form-field class="flex-auto input-default inputNewRegister">
+                            <mat-label>Comentarios</mat-label>
+                            <textarea [formControl]="comments" matInput style="height: 25px;"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row mb-lg-0 mb-5 mb-sm-0 section-header-modal ">
+                        <div class="col-md-3"></div>
+                    </div>
+
+                    <form class="row" [formGroup]="formDataTwo">
+                        <div class="inline-flex items-center justify-between w-full mb-1.5">
+                            <mat-checkbox class="-ml-2" formControlName="factura_externa">
+                                Factura externa 
+                            </mat-checkbox>
+                        </div>
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Serie</mat-label>
+                            <input formControlName="serie" matInput value="A">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Producto</mat-label>
+                            <input matInput value="80101500 - Servicios de consultoria de negocios">
+                            <!-- <input matInput [value]="optionSelected[0]?.product[0]"> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Serie</mat-label>
+                            <input formControlName="unitCode" matInput value="E48 - Servicio">
+                        </mat-form-field>
+                        <!-- <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Unidad</mat-label>
+                            <mat-select formControlName="unitCode" placeholder="Seleccionar">
+                                <mat-option value="PZ">PZ</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="flex-auto input-default inputNewRegister">
+                                    <mat-label>Lugares:<br>  <br> {{ optionSelected[0].places }}</mat-label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <mat-form-field class="flex-auto input-default inputNewRegister">
+                                    <mat-label>Descripción</mat-label>
+                                    <textarea formControlName="descriptionProduct" matInput style="height: 25px;">{{ optionSelected[0].product[0] }}</textarea>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="flex-auto input-default inputNewRegister">
+                                    <mat-label>Precio:<br>  <br> {{ optionSelected[0].totalIva }}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-end">
+                <div class="d-flex justify-content-end col-md-4 col-xl-4 col-12 pt-md-2">
+                    <button class="btn-action-add" (click)="seePreBilling()">
+                        <span>Ver pre-factura</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

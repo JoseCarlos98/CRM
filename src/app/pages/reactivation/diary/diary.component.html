@@ -1,0 +1,86 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-diary" cdkScrollable style="padding: 50px;">
+  <div class="flex flex-col w-full mx-auto px-6 sm:px-8 bg-card">
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="section-title row d-flex justify-content-between align-items-center">
+          <div class="col-md-4 col-sm-12 col-12 title">
+            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+              <mat-select [formControl]="agent" placeholder="Seleccionar agente">
+                <mat-option value="">Todos</mat-option>
+                <mat-option [value]="cat.id" *ngFor="let cat of catAgents">
+                    {{cat.first_name && cat.last_name ? cat?.first_name + ' ' + cat?.last_name : cat?.username |titlecase }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 col-sm-12 col-12 btns-section align-items-start" style="height: 105px;">
+            <div class="input-search">
+              <input [formControl]="searchBar" type="text" placeholder="Búscar">
+              <mat-icon class="icon-size-6" matSuffix [svgIcon]="'mat_solid:search'"></mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-calendar">
+      <div class="row text-center">
+        <div class="col-md-4 d-flex justify-content-start">
+          <div class="btn-group-arrows">
+            <mat-icon svgIcon="mat_outline:chevron_left" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"(viewDateChange)="closeOpenMonthViewDay()"></mat-icon>
+            <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">Hoy</div>
+            <mat-icon svgIcon="mat_outline:chevron_right" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"(viewDateChange)="closeOpenMonthViewDay()"></mat-icon>
+          </div>
+        </div>
+      
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+          <div class="btn-group-calendar">
+            <div [ngClass]="{'seleccion-calendar': typeSeleccion == 'day'}" (click)="setView(CalendarView.Day); typeSeleccion = 'day'" >Día</div>
+            <div [ngClass]="{'seleccion-calendar': typeSeleccion == 'week'}" (click)="setView(CalendarView.Week); typeSeleccion = 'week'">Semana</div>
+            <div [ngClass]="{'seleccion-calendar': typeSeleccion == 'month'}" (click)="setView(CalendarView.Month); typeSeleccion = 'month'">Mes</div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <h3>
+            <button class="btn-action-add float-end" (click)="newOrEditData()">
+              Agregar evento
+            </button>
+            <div class="clearfix"></div>
+          </h3>
+        </div>
+
+        <div class="col-md-12 mt-5 mb-5" style="min-height: 300px;">            
+          <div [ngSwitch]="view">
+
+            <mwl-calendar-month-view
+              *ngSwitchCase="CalendarView.Month"
+              [viewDate]="viewDate"
+              [events]="filteredEvents"
+              [refresh]="refresh"
+              [activeDayIsOpen]="activeDayIsOpen"
+              (dayClicked)="dayClicked($event.day)"
+              (eventClicked)="handleEvent('Clicked', $event.event)">
+            </mwl-calendar-month-view>
+
+            <mwl-calendar-week-view
+              *ngSwitchCase="CalendarView.Week"
+              [viewDate]="viewDate"
+              [events]="filteredEvents"
+              [refresh]="refresh"
+              (eventClicked)="handleEvent('Clicked', $event.event)">
+            </mwl-calendar-week-view>
+
+            <mwl-calendar-day-view
+              *ngSwitchCase="CalendarView.Day"
+              [viewDate]="viewDate"
+              [events]="filteredEvents"
+              [refresh]="refresh"
+              (eventClicked)="handleEvent('Clicked', $event.event)">
+            </mwl-calendar-day-view>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+<div class="container-fluid p-0 overflow-hidden c-results-campaing">
+
+    <div class="return-header">
+        <mat-icon svgIcon="mat_solid:arrow_back" (click)="toBack()"></mat-icon>
+        <p class="titulo-modal form-padding-title">Resultados de campaña: {{ campaingData?.campaign_name ||'-' }}</p>
+    </div>
+
+    <div class="row form-padding d-flex">
+
+        <div class="col-12 ">
+            <div class="row">
+                <div class="section-header-modal">
+                    Metas
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-1grid-flow-row gap-6 w-full mb-lg-0 mb-3 mb-sm-0">
+                    <div class="flex flex-col">
+                        <div
+                            class="flex-auto grid lg:grid-cols-5 grid-cols-4 sm:grid-cols-5  sm:grid-cols-4 gap-4 mt-6">
+
+                            <div
+                                class="cards-goalds col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <h1>Empresas a alcanzar</h1>
+                                <span>{{ campaingData?.goal_total_companies }}</span>
+                            </div>
+
+                            <div
+                                class="cards-goalds col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <h1>Respuestas deseadas</h1>
+                                <span>{{ campaingData?.goal_total_responses }}</span>
+                            </div>
+
+                            <div
+                                class="cards-goalds col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <h1>Cotizaciones deseadas</h1>
+                                <span>{{ campaingData?.goal_number_quotes }}</span>
+                            </div>
+
+                            <div
+                                class="cards-goalds col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <h1>Ventas deseadas</h1>
+                                <span>{{ campaingData?.goal_number_sales }}</span>
+                            </div>
+
+                            <div
+                                class="cards-goalds col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <h1>Monto esperado</h1>
+                                <span>{{ campaingData?.goal_amount | currency }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="section-header-modal">
+                    Resultados
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-1grid-flow-row gap-6 w-full mt-lg-5 mt-1 mt-sm-5">
+                    <div class="flex flex-col">
+                        <div class="flex-auto grid grid-cols-2 lg:grid-cols-4 sm:grid-cols-4  gap-4 mt-6">
+                            <div class="card-period col-span-2 sm:col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <h1>Monto invertido</h1>
+                                <span class="amount-green">{{ campaingData?.amount_invested | currency }}</span>
+                            </div>
+
+                            <div class="card-period col-span-2 sm:col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <div class="row">
+                                    <h1>Periodo</h1>
+                                    <div class="col-md-6">
+                                        <h2>Del:</h2>
+                                        <span>{{ campaingData?.start_date ||'-' }}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h2>Del:</h2>
+                                        <span>{{ campaingData?.end_date ||'-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="cards-goalds col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <h1>Empresas que respondieron</h1>
+                                <span> {{ campaingData?.total_companies}}</span>
+                            </div>
+
+                            <div
+                                class="card-quotes col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <h1>Cotizaciones realizadas</h1>
+                                <div class="row width-100">
+                                    <div class="col-6 d-flex flex-column align-items-center">
+                                        <h2>Rápidas</h2>
+                                        <span>{{ campaingData?.number_quotes_lead }}</span>
+                                    </div>
+                                    <div class="col-6 d-flex flex-column align-items-center">
+                                        <h2>Formales</h2>
+                                        <span>{{ campaingData?.number_quotes_client }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="card-period col-span-2 sm:col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl">
+                                <div class="row width-100">
+                                    <div class="col-md-6 d-flex flex-column mb-lg-0 mb-3 mb-sm-0">
+                                        <h2>Ventas</h2>
+                                        <span>{{ campaingData?.total_sales}} cerradas</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h2>Total monetario</h2>
+                                        <span class="total-green">{{ campaingData?.total_amount | currency }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="card-amount-two col-span-2 sm:col-span-2  flex flex-col justify-center rounded-2xl">
+                                <h1>Costo promedio por cotización</h1>
+                                <span class="color-02386A">{{ campaingData?.average_quote | currency }}</span>
+
+                            </div>
+
+                            <div class="card-amount-two col-span-2 sm:col-span-2  flex flex-col justify-center rounded-2xl">
+                                <h1>Costo promedio por ventas cerradas</h1>
+                                <span>{{ campaingData?.average_sales | currency }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="section-header-modal">
+                    Empresas que respondieron
+                </div>
+
+                <div class="col-12" *ngIf="campaingData?.companies?.length">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col"># Cot.</th>
+                            <th scope="col">Cotizado</th>
+                            <th scope="col">Vendido</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of campaingData?.companies">
+                            <td class="color-3487E9 cursor-pointer" (click)="seeData(data?.company?.company_id)">{{data?.company?.company_name || '-'}}</td>
+                            <td>{{data.quoteNumber || ''}}</td>
+                            <td>{{data.total_quote | currency}}</td>
+                            <td>{{data.total_sale | currency}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

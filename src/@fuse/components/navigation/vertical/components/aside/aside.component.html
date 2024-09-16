@@ -11,11 +11,11 @@
         [matTooltip]="item.tooltip || ''">
 
         <!-- Icon -->
-        <ng-container *ngIf="item.icon">
+        <ng-container *ngIf="item.icon || item.iconGoogleFonts">
             <mat-icon
                 class="fuse-vertical-navigation-item-icon"
                 [ngClass]="item.classes?.icon"
-                [svgIcon]="item.icon"></mat-icon>
+                [svgIcon]="item?.icon || null"> {{ item?.icon || item?.iconGoogleFonts }}</mat-icon>
         </ng-container>
 
         <!-- Title & Subtitle -->

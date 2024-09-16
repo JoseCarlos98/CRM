@@ -1,0 +1,462 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-pipeline" cdkScrollable>
+    <div class="bg-card section-padding">
+        <div class="flex flex-col w-full mx-auto px-6 sm:px-8">
+            <form class="row mt-3 mb-2" [formGroup]="formFilters">
+                <div class="col-12">
+                    <div class="section-title row d-flex justify-content-between align-items-center">
+                        <div class="col-md-12 col-sm-12 col-12 title mb-3">
+                            Pipeline
+                        </div>
+                    </div>
+
+                    <div class="row d-flex align-items-center">
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Cliente</mat-label>
+                                <mat-select placeholder="Seleccionar" formControlName="client">
+                                    <mat-option value="">Todos</mat-option>
+                                    <mat-option [value]="cat.company_id "
+                                        *ngFor="let cat of catCompanies">{{cat?.company_name || '-'}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Agente</mat-label>
+                                <mat-select placeholder="Seleccionar" formControlName="agent">
+                                    <mat-option value="">Todos</mat-option>
+                                    <mat-option [value]="cat.id" *ngFor="let cat of catAgents">
+                                        {{cat.first_name && cat.last_name ? cat?.first_name + ' ' + cat?.last_name :
+                                        cat?.username |titlecase }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Estatus</mat-label>
+                                <mat-select placeholder="Seleccionar" formControlName="status">
+                                    <mat-option value="">Todos</mat-option>
+                                    <mat-option [value]="cat.status_id" *ngFor="let cat of catStatus">{{cat?.description
+                                        || '-'}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Rango de fechas</mat-label>
+                                <mat-date-range-input [max]="fechaHoy" [rangePicker]="campaignOnePicker"
+                                    [comparisonStart]="
+                                        formFilters.value['rangeDateStart']
+                                    " [comparisonEnd]="
+                                        formFilters.value['rangeDateEnd']
+                                    ">
+                                    <input matStartDate placeholder="Inicio" formControlName="rangeDateStart" />
+                                    <input matEndDate placeholder="Final" formControlName="rangeDateEnd" />
+                                </mat-date-range-input>
+
+                                <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-end">
+                        <div class="d-flex justify-content-end col-md-2 col-xl-2 col-12">
+                            <button class="btn-search" (click)="searchWithFilters()">
+                                <span>Filtrar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="flex-auto border-t section-content-padding pt-4">
+        <div class="w-full mx-auto">
+            <div class="d-flex justify-content-end font-bold gap-1">TOTAL : <span
+                    class="font-medium">{{dataPipele?.totalSum || '-' }}</span></div>
+
+            <div class="row tap-options">
+                <span (click)="selectOption('Día')" [class.selected]="filterDayMonthYear === 'Día'">Día</span>
+                <span (click)="selectOption('Mes')" [class.selected]="filterDayMonthYear === 'Mes'">Mes</span>
+                <span (click)="selectOption('Año')" [class.selected]="filterDayMonthYear === 'Año'">Año</span>
+            </div>
+
+            <div class="row c-pipeline-header pt-5">
+                <div class="container-pipeline">
+                    <div class="pipeline-header">Cot. Leads</div>
+                    <div class="pipeline-subheader">TOTAL: {{ dataPipele?.totalQuoteLeads }}</div>
+                    <div class="scroll">
+                        <div class="bg-card card-pipeline fast-quote-card"
+                            *ngFor="let data of dataPipele?.quoteLeads; let i = index">
+                            <div class="card-title-pipeline">
+                                <img [src]="data?.companyName?.logo" alt="" />
+                                <h1 class="text-line-bottom cursor-pointer" (click)="seeData(data?.companyName?.id)">
+                                    {{data?.companyName?.name || '-'}}
+                                </h1>
+
+                                <div class="status">
+                                    <h2>Estatus:</h2>
+                                    <button class="btn-action-add">
+                                        <span>{{ data?.status }}</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="pipeline-content-card card-formal-padding" *ngFor="let dataOption of data?.optionOne">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Cot.:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span class="font-bold">#{{ data?.quoteNumber }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2" *ngFor="let option of dataOption.options; let i = index">
+                                    <div class="text-end">
+                                        <h1>Op {{ i + 1}}:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span class="text-option">{{ option?.amount }} / Qty: {{ option?.places }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Origen:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>{{ dataOption?.platform }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Camp.:</h1>
+                                    </div>
+                                    <div class="text-start"><span>{{ dataOption?.campaign }}</span></div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2" *ngFor="let option of dataOption.optionsValidity; let i = index">
+                                    <div class="text-end">
+                                        <h1>Vigen.</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>Op {{i + 1}}: {{ option?.validity }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pipline-actions-formal">
+                                <h1>Acciones</h1>
+                                <div class="colum-table-select" *ngIf="data.actionStatusId == '5fb730e9-3802-461f-a4f3-592ff04c4387' || 
+                                data.actionStatusId == '3944df8e-d359-4569-b712-ea174be69cca'">
+                                    <mat-form-field class="flex-auto input-default">
+                                        <mat-select placeholder="Seleccionar">
+                                            <mat-option [value]="data.actionName" class="border-bottom" [value]="action"
+                                                *ngFor="let action of data.actions"
+                                                (click)="getActions(action, data)">{{action}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="c-column-btns" *ngIf="data.actionName != 'Eliminado'">
+                                    <div class="btn-wallet" (click)="moneyAccount(data)"
+                                        *ngIf="(data.actionStatusId == '2b95f05d-64d4-4b36-a51c-a3ca7c6bdc72' && !data.moneyInAccount)">
+                                        <mat-icon matTooltip="Dinero en cuenta">wallet</mat-icon>
+                                    </div>
+
+                                    <div class="btn-receipt" (click)="billing(data)"
+                                        *ngIf="data.actionStatusId == 'f4fa3c48-8b48-4d39-ad09-a6699a66459f' && !data.isBilled">
+                                        <mat-icon matTooltip="Facturación">receipt_long</mat-icon>
+                                    </div>
+
+                                    <div class="btn-print" (click)="addUpladFile()" *ngIf="data.moneyInAccount">
+                                        <mat-icon matTooltip="Agregar comprobante de pago">upload_file</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-pipeline">
+                    <div class="pipeline-header">Cot. Clientes</div>
+                    <div class="pipeline-subheader">TOTAL: {{ dataPipele?.totalQuoteClients || '-' }}</div>
+                    <div class="scroll">
+                        <div class="bg-card card-pipeline formal-quote-card"
+                            *ngFor="let data of dataPipele?.quoteClients; let i = index">
+                            <div class="card-title-pipeline d-flex align-items-center flex-column pb-0">
+                                <img [src]="data?.companyName?.logo" alt="" />
+                                <h1 class="text-line-bottom cursor-pointer" (click)="seeData(data?.companyName?.id)">
+                                    {{data?.companyName?.name || '-'}}
+                                </h1>
+                            </div>
+
+                            <div class="status">
+                                <h2>Estatus:</h2>
+                                <button class="btn-action-add">
+                                    <span>{{ data?.status }}</span>
+                                </button>
+                            </div>
+
+                            <div class="pipeline-content-card card-formal-padding" *ngFor="let dataOption of data?.optionOne">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Cot.:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span class="font-bold">#{{ data?.quoteNumber }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2" *ngFor="let option of dataOption.options; let i = index">
+                                    <div class="text-end">
+                                        <h1>Op {{ i + 1}}:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span class="text-option">{{ option?.amount }} / Qty: {{ option?.places }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Origen:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>{{ dataOption?.platform }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Camp.:</h1>
+                                    </div>
+                                    <div class="text-start"><span>{{ dataOption?.campaign }}</span></div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2" *ngFor="let option of dataOption.optionsValidity; let i = index">
+                                    <div class="text-end">
+                                        <h1>Vigen.</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>Op {{i + 1}}: {{ option?.validity }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pipline-actions-formal">
+                                <h1>Acciones</h1>
+                                <div class="colum-table-select" *ngIf="data.actionStatusId == '5fb730e9-3802-461f-a4f3-592ff04c4387' || 
+                                data.actionStatusId == '3944df8e-d359-4569-b712-ea174be69cca'">
+                                    <mat-form-field class="flex-auto input-default">
+                                        <mat-select placeholder="Seleccionar">
+                                            <mat-option [value]="data.actionName" class="border-bottom" [value]="action"
+                                                *ngFor="let action of data.actions"
+                                                (click)="getActions(action, data)">{{action}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="c-column-btns" *ngIf="data.actionName != 'Eliminado'">
+                                    <div class="btn-wallet" (click)="moneyAccount(data)"
+                                        *ngIf="(data.actionStatusId == '2b95f05d-64d4-4b36-a51c-a3ca7c6bdc72' && !data.moneyInAccount)">
+                                        <mat-icon matTooltip="Dinero en cuenta">wallet</mat-icon>
+                                    </div>
+
+                                    <div class="btn-receipt" (click)="billing(data)"
+                                        *ngIf="data.actionStatusId == 'f4fa3c48-8b48-4d39-ad09-a6699a66459f' && !data.isBilled">
+                                        <mat-icon matTooltip="Facturación">receipt_long</mat-icon>
+                                    </div>
+
+                                    <div class="btn-print" (click)="addUpladFile()" *ngIf="data.moneyInAccount">
+                                        <mat-icon matTooltip="Agregar comprobante de pago">upload_file</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-pipeline">
+                    <div class="pipeline-header">Ventas Leads</div>
+                    <div class="pipeline-subheader">TOTAL: {{ dataPipele?.totalSaleSales || '-' }}</div>
+                    <div class="scroll">
+                        <div class="bg-card card-pipeline sells-card"
+                            *ngFor="let data of dataPipele?.leadsSales; let i = index">
+                            <div class="card-title-pipeline">
+                                <img [src]="data?.companyName?.logo" alt="" />
+                                <h1 class="text-line-bottom cursor-pointer" (click)="seeData(data?.companyName?.id)">
+                                    {{data?.companyName?.name || '-'}}
+                                </h1>
+                            </div>
+
+                            <div class="pipeline-total d-flex align-items-center gap-2 justify-content-center">
+                                <h2>Total:</h2>
+                                <span>{{ data?.amount }}</span>
+                            </div>
+
+                            <div class="pipeline-content-card card-formal-padding" *ngFor="let dataOption of data?.optionOne">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Cot.:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span class="font-bold">#{{ data?.quoteNumber }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2" *ngFor="let option of dataOption.options; let i = index">
+                                    <div class="text-end">
+                                        <h1>Op {{ i + 1}}:</h1>
+                                    </div>
+                                    <div class="text-start d-flex align-items-center gap-1">
+                                        <span class="text-option">{{ option?.amount }} / Qty: {{ option?.places }}</span>
+                                        <div class="btn-check-quote" *ngIf="option?.selected">
+                                            <mat-icon matTooltip="Seleccionada">task_alt</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Origen:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>{{ dataOption?.platform }}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Camp.:</h1>
+                                    </div>
+                                    <div class="text-start"><span>{{ data?.campaign }}</span></div>
+                                </div>
+                                
+                                <div class="d-flex align-items-center gap-2" *ngFor="let option of dataOption.optionsValidity; let i = index">
+                                    <div class="text-end">
+                                        <h1>Vigen.</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>Op {{i + 1}}: {{ option?.validity }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Cierre:</h1>
+                                    </div>
+                                    <div class="text-start"><span>{{data.paymentDate}}</span></div>
+                                </div>
+                            </div>
+
+                            <div class="pipline-actions-formal">
+                                <h1>Acciones</h1>
+
+                                <div class="c-column-btns">
+                                    <div class="btn-receipt" (click)="billing(data)"
+                                        *ngIf="data.actionName == 'Aprobada PC' && !data.isBilled">
+                                        <mat-icon matTooltip="Facturación">receipt_long</mat-icon>
+                                    </div>
+
+                                    <div class="btn-print" (click)="addUpladFile()" *ngIf="data.moneyInAccount">
+                                        <mat-icon matTooltip="Agregar comprobante de pago">upload_file</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-pipeline">
+                    <div class="pipeline-header">Ventas Clientes</div>
+                    <div class="pipeline-subheader">TOTAL: {{ dataPipele?.totalClientSales || '-' }}</div>
+                    <div class="scroll">
+                        <div class="bg-card card-pipeline sells-card"
+                            *ngFor="let data of dataPipele?.clientSales; let i = index">
+                            <div class="card-title-pipeline">
+                                <img [src]="data?.companyName?.logo" alt="" />
+                                <h1 class="text-line-bottom cursor-pointer" (click)="seeData(data?.companyName?.id)">
+                                    {{data?.companyName?.name || '-'}}
+                                </h1>
+                            </div>
+
+                            <div class="pipeline-total d-flex align-items-center gap-2 justify-content-center">
+                                <h2>Total:</h2>
+                                <span>{{ data?.amount }}</span>
+                            </div>
+
+                            <div class="pipeline-content-card card-formal-padding" *ngFor="let dataOption of data?.optionOne">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Cot.:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span class="font-bold">#{{ data?.quoteNumber }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2" *ngFor="let option of dataOption.options; let i = index">
+                                    <div class="text-end">
+                                        <h1>Op {{ i + 1}}:</h1>
+                                    </div>
+                                    <div class="text-start d-flex align-items-center gap-2">
+                                        <span class="text-option">{{ option?.amount }} / Qty: {{ option?.places }}</span>
+                                        <div class="btn-check-quote" *ngIf="option?.selected">
+                                            <mat-icon matTooltip="Seleccionada">task_alt</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Origen:</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>{{ dataOption?.platform }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Camp.:</h1>
+                                    </div>
+                                    <div class="text-start"><span>{{ data?.campaign }}</span></div>
+                                </div>
+                                
+                                <div class="d-flex align-items-center gap-2" *ngFor="let option of dataOption.optionsValidity; let i = index">
+                                    <div class="text-end">
+                                        <h1>Vigen.</h1>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>Op {{i + 1}}: {{ option?.validity }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="text-end">
+                                        <h1>Cierre:</h1>
+                                    </div>
+                                    <div class="text-start"><span>{{data.paymentDate}}</span></div>
+                                </div>
+                            </div>
+
+                            <div class="pipline-actions-formal">
+                                <h1>Acciones</h1>
+
+                                <div class="c-column-btns">
+                                    <div class="btn-receipt" (click)="billing(data)"
+                                        *ngIf="data.actionName == 'Aprobada PC' && !data.isBilled">
+                                        <mat-icon matTooltip="Facturación">receipt_long</mat-icon>
+                                    </div>
+
+                                    <div class="btn-print" (click)="addUpladFile()" *ngIf="data.moneyInAccount">
+                                        <mat-icon matTooltip="Agregar comprobante de pago">upload_file</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

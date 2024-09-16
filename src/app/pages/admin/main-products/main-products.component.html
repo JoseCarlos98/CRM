@@ -1,0 +1,75 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-main-product" cdkScrollable>
+    <div class="bg-card section-padding">
+        <div class="flex flex-col w-full mx-auto px-6 sm:px-8">
+            <form class="row mt-3 mb-2" [formGroup]="formFilters">
+                <div class="col-12">
+                    <div class="section-title row d-flex justify-content-between align-items-center">
+                        <div class="col-md-7 col-sm-12 col-12 title mb-3">
+                            {{selectionType}}
+                        </div>
+
+                        <div class="col-md-5 col-sm-12 col-12 btns-section mb-3">
+                            <button class="btn-yellow-newRegister">
+                                <span (click)="newData()">Registrar nueva</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-md-8 col-xl-8 col-12 d-flex">
+                            <div class="d-flex col-md-7 col-xl-7 col-12 mb-4">
+                                <div class="input-search">
+                                    <input type="text" placeholder="Búscar">
+                                    <mat-icon class="icon-size-6" matSuffix [svgIcon]="'mat_solid:search'"></mat-icon>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xl-4 col-12 d-flex justify-content-end gap-5">
+                            <button class="btn-excel ml-3" (click)="douwnloadExel()">
+                                <mat-icon svgIcon="mat_outline:file_download"></mat-icon>
+                                <span>Excel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="c-general-table section-content-padding">
+        <div class="w-full mx-auto">
+
+            <mat-tab-group class="sm:px-2" mat-stretch-tabs="false" [animationDuration]="'0'"
+                (selectedTabChange)="onTabChange($event)">
+                <div class="row mt-5">
+                    <mat-tab label="Productos">
+                        <ng-template matTabContent>
+                            <div class="mt-5 grid grid-cols-1 w-full min-w-0">
+                                <app-products></app-products>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+
+                    <mat-tab label="Precios">
+                        <ng-template matTabContent>
+                            <div class="mt-5 grid grid-cols-1 w-full min-w-0">
+                                <app-price></app-price>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+
+                    <mat-tab label="Descuentos">
+                        <ng-template matTabContent>
+                            <div class="mt-5 grid grid-cols-1 w-full min-w-0">
+                                <app-discounts></app-discounts>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                </div>
+            </mat-tab-group>
+        </div>
+    </div>
+
+</div>

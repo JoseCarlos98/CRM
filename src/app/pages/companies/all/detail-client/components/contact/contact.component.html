@@ -1,0 +1,63 @@
+<div class="grid grid-cols-1 w-full min-w-0">
+    <div class="grid grid-cols-1 w-full min-w-0">
+        <div class="row d-flex">
+            <div class="d-flex col-md-12 col-xl-12 col-12 pt-md-2 justify-content-end align-items-end ">
+                <button class="btn-yellow" (click)="neworEditContact()">
+                    <span>Agregar contacto</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row my-8 c-scroll">
+    <div class="col-md-6" *ngFor="let data of contacts; let i = index;">
+        <div class="contact-content">
+            <div class="d-flex justify-content-between align-items-center">
+                <p>Contacto {{i + 1}}</p>
+                <div class="c-column-btns pt-0">
+                    <div class="btn-edit" (click)="neworEditContact(data)">
+                        <mat-icon matTooltip="Editar">edit_square</mat-icon>
+                    </div>
+                    
+                    <div class="btn-delete" (click)="deleteData(data.contact_id)">
+                        <mat-icon matTooltip="Eliminar">delete</mat-icon>
+                    </div>    
+                </div>
+            </div>
+
+            <div class="c-info-contact">
+                <div class="d-flex align-content-center gap-2">
+                    <p>Nombre:</p>
+                    <span>{{data?.full_name || '-'}}</span>
+                </div>
+
+                <div class="d-flex align-content-center gap-2">
+                    <p>Cargo:</p>
+                    <span>{{data?.position  || '-'}}</span>
+                </div>
+                
+                <div class="d-flex align-content-center gap-2">
+                    <p>Correo:</p>
+                    <span>{{data?.email  || '-'}}</span>
+                </div>
+                
+                <div class="d-flex align-content-center gap-2">
+                    <p>Teléfono fijo:</p>
+                    <span>{{data?.local_phone  || '-'}}</span>
+                </div>
+         
+                <div class="d-flex align-content-center gap-2">
+                    <p>Extensión:</p>
+                    <span>{{data?.ext  || '-'}}</span>
+                </div>
+              
+                <div class="d-flex align-content-center gap-2">
+                    <p>Teléfono móvil:</p>
+                    <span>{{data?.movil_phone  || '-'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

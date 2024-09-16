@@ -1,0 +1,101 @@
+<div class="container-fluid p-0 overflow-hidden">
+
+    <div class="modal-header">
+        <p class="titulo-modal">Cerrar como venta</p>
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row p-5 d-flex">
+        <form class="col-12 modal-content-scroll" [formGroup]="formData">
+            <div class="row">
+                <div class="col-md-12">
+                    <mat-radio-group formControlName="quote_option_id" class="d-flex row">
+                        <div class="col-md-3" *ngFor="let data of objEditData?.closeSale">
+                            <mat-radio-button [value]="data.totalPrice.id" class="mb-2">
+                                <div>
+                                    <div class="table-column-totalPrice mb-3">
+                                        <h1 class="font-bold">Tipo: <span class="font-normal">{{ data.product.type
+                                                }}</span> </h1>
+                                        <h1 class="font-bold">Lugares: <span class="font-normal">{{ data.product.places
+                                                }}</span> </h1>
+                                        <h1 class="font-bold">Precio: <span class="font-normal">{{ data.product.total
+                                                }}</span> </h1>
+                                        <h1 class="font-bold">Vigencia: <span class="font-normal">{{
+                                                data.totalPrice.expire }}</span> </h1>
+                                    </div>
+                                </div>
+                            </mat-radio-button>
+                        </div>
+                    </mat-radio-group>
+
+                    <div class="row mb-lg-0 mb-5 mb-sm-0 section-header-modal ">
+                        <div class="col-md-3">Crear factura</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Nombre de la empresa (razón social)</mat-label>
+                            <input formControlName="company_name" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Selecciona forma de pago</mat-label>
+                            <mat-select formControlName="way_to_pay_id" placeholder="Seleccionar">
+                                <mat-option [value]="cat.way_to_pay_id"
+                                    *ngFor="let cat of catWayToPay">{{ cat.way_to_pay_code }} - {{ cat?.way_to_pay_name || '-' }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>RFC</mat-label>
+                            <input formControlName="tax_id_number" maxlength="13" matInput pattern="^[a-zA-Z0-9]{12,13}$">
+                            <mat-error *ngIf="formData.get('tax_id_number').invalid && formData.get('tax_id_number').touched">
+                                RFC debe tener 12 o 13 caracteres
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Selecciona metodo de pago</mat-label>
+                            <mat-select formControlName="payment_method_id" placeholder="Seleccionar">
+                                <mat-option [value]="cat.payment_method_id"
+                                    *ngFor="let cat of catPaymentMethod">{{cat?.payment_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Selecciona el uso de CFDI</mat-label>
+                            <mat-select formControlName="invoice_use_id" placeholder="Seleccionar">
+                                <mat-option [value]="cat.invoice_use_id"
+                                    *ngFor="let cat of catInvoiceUse">{{cat?.invoice_use_code || '-'}} -
+                                    {{cat?.invoice_use_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Selecciona condicion de pago</mat-label>
+                            <mat-select formControlName="payment_condition_id" placeholder="Seleccionar">
+                                <mat-option [value]="cat.payment_condition_id"
+                                    *ngFor="let cat of catPaymentCondiction">{{cat?.payment_condition_name ||
+                                    '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-end">
+                <div class="d-flex justify-content-end col-md-2 col-xl-2 col-12 pt-md-2">
+                    <button class="btn-action-add" [disabled]="!formData.valid" (click)="actionSave()">
+                        <span>Guardar</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

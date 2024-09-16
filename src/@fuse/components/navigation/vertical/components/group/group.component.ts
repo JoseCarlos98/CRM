@@ -17,6 +17,16 @@ import { Subject, takeUntil } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
     imports        : [NgClass, NgIf, MatIconModule, NgFor, FuseVerticalNavigationBasicItemComponent, FuseVerticalNavigationCollapsableItemComponent, FuseVerticalNavigationDividerItemComponent, forwardRef(() => FuseVerticalNavigationGroupItemComponent), FuseVerticalNavigationSpacerItemComponent],
+    styles         : [
+        `
+            .colorMenu {
+                color: #4B5062!important;
+            }
+            .colorSubmenu {
+                color: #646878!important;
+            }
+        `
+    ]
 })
 export class FuseVerticalNavigationGroupItemComponent implements OnInit, OnDestroy
 {

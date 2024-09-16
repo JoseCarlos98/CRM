@@ -1,0 +1,63 @@
+<fuse-loading-bar></fuse-loading-bar>
+<fuse-vertical-navigation class="dark bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'" [navigation]="menu" [opened]="!isScreenSmall">
+    <ng-container fuseVerticalNavigationContentHeader>
+        <div class="flex items-center w-full p-4 pl-6">
+            <div class="flex items-center justify-center cursor-pointer" [routerLink]="['/home/dashboard/principal']"
+                routerLinkActive="router-link-active">
+                <img class="logo-crm" src="../../../../assets/images/logo/logo-sidebar-crm.png">
+            </div>
+
+            <div class="flex items-center ml-auto me-2" [routerLink]="['/home/admin/perfil']">
+                <button mat-menu-item [routerLink]="['/home/admin/perfil']">
+                    <mat-icon matTooltip="Ver perfil" [svgIcon]="'heroicons_outline:user-circle'"></mat-icon> 
+                </button>
+            </div>
+
+            <div>
+                <button mat-menu-item (click)="signOut()">
+                    <mat-icon matTooltip="Cerrar sesión"
+                        [svgIcon]="'heroicons_outline:arrow-right-on-rectangle'"></mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center w-full p-4">
+            <div class="relative w-24 h-24 d-flex justify-content-center align-items-center">
+                <img class="w-full h-full rounded-full" [src]="photo" alt="User avatar">
+            </div>
+
+            <div class="flex flex-col items-center justify-center w-full mt-6">
+                <div
+                    class="colorUserName w-full whitespace-nowrap text-ellipsis overflow-hidden text-center leading-normal font-medium">
+                    {{ userName }}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</fuse-vertical-navigation>
+
+<div class="flex flex-col flex-auto w-full min-w-0">
+    <div style="height: 50px!important;"
+        class="relative flex flex-0 items-center w-full px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden colorHeader">
+        <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
+            <mat-icon class="color-icon-header" [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+        </button>
+
+        <div class="d-flex justify-content-end width-100">
+            <div class="flex items-center pl-2 ml-autosm:space-x-5 justify-content-between" style="width: 60%;">
+                <search [appearance]="'bar'"></search>
+                <mat-icon class="color-icon-header cursor-pointer" (click)="gocalendar()">calendar_today</mat-icon>
+                <shortcuts></shortcuts>
+                <mat-icon class="color-icon-header cursor-pointer" (click)="goMailbox()">inbox</mat-icon>
+                <notifications></notifications>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col flex-auto">
+        <router-outlet *ngIf="true"></router-outlet>
+    </div>
+</div>
+
+<quick-chat style="width: unset!important;" #quickChat="quickChat"></quick-chat>

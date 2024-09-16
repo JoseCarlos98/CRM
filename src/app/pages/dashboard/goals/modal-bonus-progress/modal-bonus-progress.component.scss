@@ -1,0 +1,39 @@
+.c-modal-progress {
+
+    .modal-bono-title {
+        font-size: 30px;
+        font-weight: 400;
+        color: #1E293B;
+    }
+
+        .icon-goal {
+            font-size: 50px;
+            width: 60px;
+            height: 36px;
+            color: white;
+            background: #00C292;
+        }
+
+        ::ng-deep .mdc-linear-progress__bar-inner {
+            border-color:#385A6D!important
+        }
+    
+        .c-goals {
+            .icon-goal {
+                font-size: 50px;
+                width: 60px;
+                height: 36px;
+                color: white;
+                background: #00C292;
+            }
+        
+            ::ng-deep .mdc-linear-progress__bar-inner {
+                border-color:#385A6D!important
+            }
+        }
+
+        .contenedor-scroll-tabla {
+            box-shadow: none
+        }
+        
+    }

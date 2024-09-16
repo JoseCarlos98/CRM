@@ -1,0 +1,126 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-detail-client" cdkScrollable>
+
+    
+    <div class=" row flex-auto -mt-px pt-4 sm:pt-6 p-8">
+        <div class="col-12 bg-card card-client">
+            <div class="row card-header-clients">
+                <div class="col-lg-2 col-md-6 col-sm-12 flex-center mt-0">
+                    <img [src]="objEditData?.logo" alt="">
+                </div>
+                <div class="col-lg-8 col-md-12 col-sm-12 title-info-client mt-0 ms-0">
+                    <h1>{{ objEditData?.companyName }}</h1>
+                    <span>{{ objEditData?.statusCompany | titlecase }}</span>
+
+                    <div class="row mt-5">
+                        <div class="col-md-6 c-column-btns d-flex justify-content-start align-content-center gap-3 m-0">
+                            <div class="btn-see" (click)="goEdit()">
+                                <mat-icon matTooltip="Editar">edit_square</mat-icon>
+                            </div>
+    
+                            <div class="btn-edit">
+                                <mat-icon matTooltip="Correo">mail</mat-icon>
+                            </div>
+    
+                            <div class="btn-delete" (click)="goCall()">
+                                <mat-icon matTooltip="Teléfono">phone</mat-icon>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex align-content-center justify-content-end">
+                            <button class="btn-yellow-newRegister" (click)="selectTab(4)">
+                                <span >Ver contactos</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Información de la empresa</h2>
+
+            <div class="row client-info">
+                <div class="col-12">
+                    <div class="d-flex align-content-center gap-2">
+                        <p>Ciudad / Estado:</p>
+                        <span>{{ objEditData?.city }}</span>
+                    </div>
+                    <div class="d-flex align-content-center gap-2">
+                        <p>País:</p>
+                        <span>{{ objEditData?.country }}</span>
+                    </div>
+                    <div class="d-flex align-content-center gap-2">
+                        <p>Página Web:</p>
+                        <span>{{ objEditData?.web }}</span>
+                    </div>
+                    <div class="d-flex align-content-center gap-2">
+                        <p>Giro o rubro:</p>
+                        <span>{{ objEditData?.business }}</span>
+                    </div>
+                    <div class="d-flex align-content-center gap-2">
+                        <p>Categoría:</p>
+                        <span>{{ objEditData?.category }}</span>
+                    </div>
+                    <div class="d-flex align-content-center gap-2">
+                        <p>Campaña:</p>
+                        <span>{{ objEditData?.campaign }}</span>
+                    </div>
+                    <div class="d-flex align-content-center gap-2">
+                        <p>Propietario:</p>
+                        <span>{{ objEditData?.owner }}</span>
+                    </div>
+                    <div class="d-flex align-content-center gap-2">
+                        <p>Email:</p>
+                        <span>{{ objEditData?.email }}</span>
+                    </div>
+                    <div class="d-flex align-content-center gap-2">
+                        <p>Teléfono:</p>
+                        <span>{{ objEditData?.phone }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <mat-tab-group *ngIf="objEditData?.id" id="contactosTab" class="mat-grupo-color sm:px-2" mat-stretch-tabs="false" [animationDuration]="'0'" [(selectedIndex)]="selectedTabIndex">
+                <mat-tab label="Cotizaciones">
+                    <ng-template matTabContent>
+                        <app-quotes [idCompany]="objEditData?.id"></app-quotes>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Historial">
+                    <ng-template matTabContent>
+                        <app-history [objEditData]="objEditData"></app-history>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Correos">
+                    <ng-template matTabContent>
+                        <app-emails></app-emails>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Llamadas">
+                    <ng-template matTabContent>
+                        <app-calls [idCompany]="objEditData?.id"></app-calls>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Contactos">
+                    <ng-template matTabContent>
+                        <app-contact [idCompany]="objEditData?.id"></app-contact>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Campañas">
+                    <ng-template matTabContent>
+                        <app-campaign [idCompany]="objEditData?.id"></app-campaign>
+                    </ng-template>
+                </mat-tab>
+     
+                <mat-tab label="Documentos">
+                    <ng-template matTabContent>
+                        <app-documents></app-documents>
+                    </ng-template>
+                </mat-tab>
+
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

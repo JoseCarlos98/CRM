@@ -1,0 +1,94 @@
+.c-camping-dash {
+    .table-column-three-buttons {
+        span {
+            margin: auto;
+            width: 80px!important;
+        }
+    }
+
+    ::ng-deep .mat-mdc-tab-body-content {
+        padding: 0!important;
+    }
+    
+    .btn-search {
+        margin-bottom: 16px;
+    }
+    
+    .month-info {
+        min-height: 125px;
+        color: #1E293B;
+
+        >div:nth-child(1) {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        >div:nth-child(2) {
+            font-size: 45px;
+            font-weight: 700;
+        }
+    }
+
+    .amount-month {
+        min-height: 125px;
+        color: #1E293B;
+
+        >div {
+            text-align: center;
+
+            >div:nth-child(1) {
+                height: 40px;
+                font-size: 16px;
+                font-weight: 700;
+                height: 45px;
+            }
+
+            >div:nth-child(2) {
+                font-size: 27px;
+                margin-top: 10px;
+                font-weight: 400;
+            }
+
+            span {
+                font-size: 45px;
+                font-weight: 700;
+            }
+        }
+
+        .count-total {
+            div {
+                font-size: 27px !important;
+                margin-top: 10px !important;
+                font-weight: 400 !important;
+            }
+        }
+    }
+
+    .two-month {
+        height: 145px;
+    }
+
+
+
+
+
+
+
+
+}
+
+.min-heigt {
+    min-height: 310px;
+}
+
+.green-color {
+    color: #026A1F;
+}
+
+.color-yellow {
+    color: #F1E00E;
+}
+
+.color-red {
+    color: #FF0000;
+}

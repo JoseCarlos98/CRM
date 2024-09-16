@@ -1,0 +1,157 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-home" cdkScrollable>
+    <div class=" row flex-auto border-t -mt-px pt-4 sm:pt-6 p-8">
+        <div class="col-12 bg-card card-quotes">
+            <div class="row card-header-quotes">
+                <div class="col-md-5 title">
+                    <span>Cotización #{{ objEditData?.quoteNumber || '-' }}</span>
+                    <span>Fecha: {{ objEditData?.regiterDate || '-' }}</span>
+                </div>
+
+                <div class="col-md-7 img-title">
+                    <div class="row">
+                        <div class="col-5 img">
+                            <img [src]="objEditData?.company?.logo" alt="">
+                        </div>
+                        <div class="col-7 text-img">
+                            <span>{{objEditData?.company?.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row content-colum">
+                <div class="col-md-8 header-content-quote">
+                    Producto
+                </div>
+                <div class="col-md-2 header-content-quote">
+                    Cantidad
+                </div>
+                <div class="col-md-2 header-content-quote">
+                    Precio
+                </div>
+            </div>
+
+            <div *ngFor="let option of quotesOptions; let i = index;">
+                <div *ngFor="let product of option.optionProducts; let ii = index; let isLast = last">
+                    <div class="row content">
+                        <div class="col-md-8 header-content-quote">
+                            <div class="header-option ">
+                                <div class="title d-flex align-items-center gap-2" *ngIf="ii == 0">
+                                    <h1 class="fuente font-bold">Opción {{ i + 1 }}: </h1>
+                                    <span class="fuente">{{ option.typePrice == 1 ? 'Normal' : 'Promoción'}}</span>
+                                </div>
+                                <span class="fuente mt-1 mt-5 ">{{ product.places }} lugares</span>
+                                <br>
+                                <span class="fuente mt-1 mt-5 ">{{ product.productName }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 header-content-quote">
+                            <span class="fuente">
+                                {{ product?.places }} lugares
+                            </span>
+                        </div>
+                        <div class="col-md-2 header-content-quote">
+                            <div class="mb-3 d-flex flex-column">
+                                <span class="fuente font-bold">
+                                    <!-- Total -->
+                                    <!-- {{ option?.discount ? 'Subtotal' : 'Total'}} -->
+                                </span>
+                                <span class=" fuente">
+                                    ${{ product?.total }} <br>
+                                    <!-- <span *ngIf="isLast">
+                                        (IVA Incluido)
+                                    </span> -->
+                                </span>
+                            </div>
+
+                            <div class="mb-3" *ngIf="option?.discount && isLast">
+                                <span class="fuente font-bold">
+                                    Descuento
+                                </span>
+    
+                                <span class=" fuente" >
+                                    ${{ option?.discount }} <br>
+                                </span>
+                            </div>
+
+                          <div class="mb-3" *ngIf=" isLast">
+                            <span class="fuente font-bold">
+                                Total
+                            </span>
+                           
+                            <span class=" fuente">
+                                {{ option?.total }} <br>
+                                <!-- {{ option?.total | currency }} <br> -->
+                            </span>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="row content-colum">
+                <div class="row content-colum p-0 pb-3">
+                    <div class="col-md-12 header-content-quote pays">
+                        Forma de pago y condiciones:
+                    </div>
+
+                    <div class="row">
+                        <ul class="list-unstyled">
+                            <li>Transferencia Bancaria / Pago anticipado <a href="#">¿Qué otras formas de pago hay?</a>
+                            </li>
+                            <li>Precios en MXP</li>
+                            <li>Aplica para cualquier curso disponible de la plataforma abrevius bajo los Términos y
+                                Condiciones comerciales establecidos. /<a href="#">Ver aquí catálogo de cursos disponibles</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row content-colum p-0 pb-3">
+                    <div class="col-md-12 header-content-quote pays">
+                        Realizar pago en:
+                    </div>
+
+                    <div class="row">
+                        <span>En caso de favorecernos con su preferencia, su empresa podrá realizar el pago vía
+                            transferencia bancaria a los siguientes datos:Abrevius, S.A. de C.V. - BBVA / Número de
+                            cuenta: 0111202383 / CLABE: 012 320 00111202383 3</span>
+                    </div>
+                </div>
+                
+                <div class="row p-0 pb-3">
+                    <div class="header-content-quote pays">
+                        Notificar pago:
+                    </div>
+                    <span>Una vez realizada la transferencia favor de enviar al correo
+                        {{'atencion@abrevius.com'}}:</span>
+                    <ul class="list-unstyled">
+                        <li>El comprobante bancario</li>
+                        <li>Mencionar el numero de Cotización que está pagando</li>
+                        <li>Sus datos de facturación con alta del SAT (clientes nuevos)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row advantages advantages-p">
+                <span class="font-bold cursor-pointer">Ventajas de tomar nuestros cursos</span>
+            </div>
+
+            <div class="row advantages advantages-p">
+                <mat-form-field class="flex-auto p-0">
+                    <textarea placeholder="En el siguiente espacio redacte el contenido del correo a enviar, automáticamente se adjuntará el PDF con la cotización." [formControl]="emailText" matInput style="height: 400px;"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-12 section-btns-footer">
+                    <button class="btn-action-add" (click)="sendEmail()">
+                        <span>Enviar correo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

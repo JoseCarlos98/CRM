@@ -1,0 +1,178 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-goals" cdkScrollable>
+    <div class="bg-card section-padding">
+        <div class="flex flex-col w-full mx-auto px-6 sm:px-8">
+            <form class="row mt-3 mb-2">
+                <div class="col-12">
+                    <div class="section-title row d-flex justify-content-between align-items-center">
+                        <div class="col-md-4 col-sm-12 col-12 title mb-3">Metas</div>
+
+                        <div class="col-md-8 col-sm-12 col-12 btns-section mb-3">
+                            <button class="btn-yellow-newRegister">
+                                <span (click)="newData()">Registrar nueva</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex">
+                        <div class="d-flex col-md-5 col-xl-5 col-12 pt-md-2 mb-4">
+                            <div class="input-search">
+                                <input type="text" placeholder="Búscar">
+                                <mat-icon class="icon-size-6" matSuffix [svgIcon]="'mat_solid:search'"></mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="c-general-table section-content-padding">
+        <div class="col-12 contenedor-scroll-tabla table-goals p-4">
+            <table mat-table #table [dataSource]="dataSource" class="w-100 tabla-personalizada-default-white ">
+                <caption></caption>
+
+                <ng-container matColumnDef="goals">
+                    <th mat-header-cell *matHeaderCellDef>Metas</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="my-8 space-y-8">
+                            <div class="flex flex-col">
+                                <div class="flex items-center">
+                                    <div
+                                        class="icon-goal flex items-center justify-center w-14 h-14 rounded-3 text-white">
+                                        <mat-icon class="text-current" [svgIcon]="'heroicons_outline:user'"></mat-icon>
+                                    </div>
+                                    <div class="flex-auto ml-4 leading-none">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="mt-2 font-medium text-2xl text-start">{{element.goals.bono}}
+                                            </div>
+                                            <div class="flex items-end justify-end min-w-18 mt-auto ml-6">
+                                                <div class="text-lg leading-none">96%</div>
+                                            </div>
+                                        </div>
+                                        <mat-progress-bar class="mt-3 rounded-full" [color]="'success'"
+                                            [mode]="'determinate'"
+                                            [value]="(element.goals.expenses  * 100) / element.goals.expensesLimit"></mat-progress-bar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="taskAssigned">
+                    <th mat-header-cell *matHeaderCellDef>Tarea asignada</th>
+                    <td mat-cell *matCellDef="let element">
+                        <!-- {{element.taskAssigned}} -->
+                        Campaña
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="agents">
+                    <th mat-header-cell *matHeaderCellDef>Agente (S)</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="seeAll" (click)="seeAgents()">Ver todos</div>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="c-column-btns">
+
+                            <div class="btn-see">
+                                <mat-icon matTooltip="Ver" (click)="seeBonusProgress()">visibility</mat-icon>
+                            </div>
+
+                            <div class="btn-edit" (click)="deleteData(element)">
+                                <mat-icon matTooltip="Editar">edit_square</mat-icon>
+                            </div>
+
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                        <h5 class="text-center my-5">No se encontraron resultados.</h5>
+                    </td>
+                </tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+
+
+        <div class="section-header-dashboard d-flex align-items-center justify-content-center mt-5">
+            Historial de metas
+        </div>
+
+        <div class="col-12 contenedor-scroll-tabla p-4">
+            <table mat-table #table [dataSource]="dataSourceGoalHistory"
+                class="w-100 tabla-personalizada-default-white ">
+                <caption></caption>
+
+                <ng-container matColumnDef="bonusName">
+                    <th mat-header-cell *matHeaderCellDef>Nombre del bono</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.bonusName}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="taskAssigned">
+                    <th mat-header-cell *matHeaderCellDef>Tarea asignada</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.taskAssigned}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="period">
+                    <th mat-header-cell *matHeaderCellDef>Periodo</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="table-column-date-start-end">
+                            <span> Del: {{ element.period.inicial }} </span>
+                            <span> al : {{ element.period.final }} </span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="agent">
+                    <th mat-header-cell *matHeaderCellDef>Agentes</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="seeAll" (click)="seeAgents()">
+                            {{ element.agent }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="compliance">
+                    <th mat-header-cell *matHeaderCellDef>Cumplimiento</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.compliance}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="bonusAchieved">
+                    <th mat-header-cell *matHeaderCellDef>Bono logrado</th>
+                    <td mat-cell *matCellDef="let element" class="color-green-goals">
+                        {{element.bonusAchieved}}
+                    </td>
+                </ng-container>
+
+                <tr *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumnsGoals.length">
+                        <h5 class="text-center my-5">No se encontraron resultados.</h5>
+                    </td>
+                </tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsGoals"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsGoals"></tr>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>

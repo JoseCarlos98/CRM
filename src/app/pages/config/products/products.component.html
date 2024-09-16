@@ -1,0 +1,118 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-home" cdkScrollable>
+
+    
+    <div class="bg-card">
+        <div class="flex flex-col w-full mx-auto px-6 sm:px-8">
+
+            
+            <form class="row mt-5 mb-5">
+                <div class="col-12">
+
+                    <div class="section-title row d-flex justify-content-between align-items-center">
+
+                        <div class="col-md-5 col-sm-12 col-12 title mb-5 mb-lg-0 mb-md-0 mb-sm-0">
+                            Productos
+                        </div>
+
+                        <div class="col-md-7 col-sm-12 col-12 btns-section mb-5 mb-lg-0 mb-md-0 mb-sm-0">
+                            <button class="btn-yellow-newRegister">
+                                <span (click)="newProduct()">Registrar nuevo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex">
+                        <div class="d-flex col-md-7 col-xl-7 col-12 pt-md-2 align-items-end ">
+                            <button class="btn-yellow">
+                                <span>Excel</span>
+                            </button>
+                        </div>
+                        
+                        <div class="d-flex col-md-5 col-xl-5 col-12 pt-md-2">
+                            <div class="input-search">
+                                <input type="text" placeholder="Búscar">
+                                <mat-icon class="icon-size-6" matSuffix [svgIcon]="'mat_solid:search'"></mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+            <div class="row" style="padding: 27px;">
+                <div class="col-12 contenedor-scroll-tabla">
+                    <table mat-table #table [dataSource]="dataSource"
+                        class="w-100 tabla-personalizada-default">
+                        <caption></caption>
+
+                        <ng-container matColumnDef="codigo">
+                            <th mat-header-cell *matHeaderCellDef>Código</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.codigo }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.nombre }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="precio">
+                            <th mat-header-cell *matHeaderCellDef>Precio</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.precio }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="link">
+                            <th mat-header-cell *matHeaderCellDef>Link</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.link }}
+                            </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="acciones">
+                            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="c-column-btns">
+
+                                    <div class="colum-btn btn-edit" (click)="seeQuote()">
+                                        <mat-icon matTooltip="Editar">edit_square</mat-icon>
+                                    </div>
+
+                                    <div class="colum-btn btn-wallet">
+                                        <mat-icon matTooltip="Billetara">wallet</mat-icon>
+                                    </div>
+
+                                    <div class="colum-btn btn-receipt">
+                                        <mat-icon matTooltip="Factura">receipt_long</mat-icon>
+                                    </div>
+
+                                    <div class="colum-btn btn-print">
+                                        <mat-icon matTooltip="Descagar">print</mat-icon>
+                                    </div>
+
+                                </div>
+                            </td>
+                        </ng-container>
+
+
+                        <tr *matNoDataRow>
+                            <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                                <h5 class="text-center my-5">No se encontraron resultados.</h5>
+                            </td>
+                        </tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+</div>

@@ -1,0 +1,226 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-config" s cdkScrollable>
+    <div class="bg-card rounded-4 section-padding-admin">
+        <div class="flex flex-col w-full mx-auto px-6 sm:px-8">
+            <div class="row mt-3 mb-2">
+                <div class="col-12">
+                    <div class="section-title row d-flex justify-content-between align-items-center">
+                        <div class="col-md-7 col-sm-12 col-12 title">
+                            Descarga de correos
+                        </div>
+                    </div>
+
+                    <div class="row d-flex align-items-center">
+                        <div class="flex col-sm-12  col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Año</mat-label>
+                                <mat-select placeholder="Seleccionar">
+                                    <mat-option value="Año-1">Año 1</mat-option>
+                                    <mat-option value="Año-2">Año 2</mat-option>
+                                    <mat-option value="Año-3">Año 3</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Mes</mat-label>
+                                <mat-select placeholder="Seleccionar">
+                                    <mat-option value="Mes-1">Mes 1</mat-option>
+                                    <mat-option value="Mes-2">Mes 2</mat-option>
+                                    <mat-option value="Mes-3">Mes 3</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Rango de fechas</mat-label>
+                                <mat-date-range-input [max]="fechaHoy" [rangePicker]="campaignOnePicker"
+                                    [comparisonStart]="" [comparisonEnd]="">
+                                    <input matStartDate placeholder="Inicio" />
+                                    <input matEndDate placeholder="Final" />
+                                </mat-date-range-input>
+
+                                <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-md-8 col-xl-8 col-12 d-flex">
+                            <div class="d-flex col-md-7 col-xl-7 col-12 mb-4">
+                                <div class="input-search">
+                                    <input type="text" placeholder="Búscar">
+                                    <mat-icon class="icon-size-6" matSuffix [svgIcon]="'mat_solid:search'"></mat-icon>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xl-4 col-12 d-flex justify-content-end gap-5">
+                            <button class="btn-excel ml-3" (click)="douwnloadExel()">
+                                <mat-icon svgIcon="mat_outline:file_download"></mat-icon>
+                                <span>Excel</span>
+                            </button>
+
+                            <button class="btn-search">
+                                <span>Filtrar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="c-general-table pt-2">
+            <div class="col-12 contenedor-scroll-tabla">
+                <table mat-table #table [dataSource]="dataSource" class="w-100 tabla-personalizada-default">
+                    <caption></caption>
+
+                    <ng-container matColumnDef="number">
+                        <th mat-header-cell *matHeaderCellDef>Número</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.number }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.name }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="rfc">
+                        <th mat-header-cell *matHeaderCellDef>RFC</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.rfc }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="address">
+                        <th mat-header-cell *matHeaderCellDef>Domicilio</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.address }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="country">
+                        <th mat-header-cell *matHeaderCellDef>País</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.country }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="city">
+                        <th mat-header-cell *matHeaderCellDef>Ciudad</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.city }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="state">
+                        <th mat-header-cell *matHeaderCellDef>Estado</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.state }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="web">
+                        <th mat-header-cell *matHeaderCellDef>Web</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.web }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef>Categoría</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.category }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="origin">
+                        <th mat-header-cell *matHeaderCellDef>Origen</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.origin }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="img">
+                        <th mat-header-cell *matHeaderCellDef>Imagen</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="table-column-img-alone">
+                                <img src="../../../../assets/images/img-face.png" alt="">
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="giro">
+                        <th mat-header-cell *matHeaderCellDef>Giro</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.giro }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.type }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mail">
+                        <th mat-header-cell *matHeaderCellDef>Correo</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.mail }}
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="owner">
+                        <th mat-header-cell *matHeaderCellDef>Propietario</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.owner }}
+                        </td>
+                    </ng-container>
+
+
+
+                    <!-- <ng-container matColumnDef="actioms">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="c-column-btns">
+    
+                            <div class="btn-see">
+                                <mat-icon matTooltip="Ver" (click)="deleteData(element)">visibility</mat-icon>
+                            </div>
+    
+                            <div class="btn-edit" (click)="deleteData(element)">
+                                <mat-icon matTooltip="Editar">edit_square</mat-icon>
+                            </div>
+                      
+                            <div class="btn-copy">
+                                <mat-icon matTooltip="Clonar" (click)="deleteData(element)">content_copy</mat-icon>
+                            </div>
+    
+                            <div class="btn-delete" (click)="deleteData(element)">
+                                <mat-icon matTooltip="Eliminar">delete</mat-icon>
+                            </div>
+    
+                        </div>
+                    </td>
+                </ng-container> -->
+
+                    <tr *matNoDataRow>
+                        <td class="mat-cell" [attr.colspan]="displayedColumnsCampaign.length">
+                            <h5 class="text-center my-5">No se encontraron resultados.</h5>
+                        </td>
+                    </tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsCampaign"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsCampaign"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

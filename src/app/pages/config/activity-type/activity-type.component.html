@@ -1,0 +1,36 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-config" s cdkScrollable>
+    <div class="bg-card rounded-4 section-padding-admin">
+        <div class="flex flex-col w-full mx-auto px-6 sm:px-8">
+            <form class="row mt-3 mb-2">
+                <div class="col-12">
+                    <div class="section-title row d-flex justify-content-between align-items-center">
+                        <div class="col-md-7 col-sm-12 col-12 title mb-3">
+                            Tipo de {{ title }}
+                        </div>
+
+                        <div class="col-md-5 col-sm-12 col-12 btns-section mb-3">
+                            <button class="btn-yellow-newRegister">
+                                <span (click)="newData()">Registrar nueva</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <mat-tab-group class="mat-grupo-color sm:px-2" mat-stretch-tabs="false" [animationDuration]="'0'"
+            (selectedTabChange)="onTabChange($event)">
+            <mat-tab label="Actividad">
+                <ng-template matTabContent>
+                    <app-activity></app-activity>
+                </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Subactividad">
+                <ng-template matTabContent>
+                    <app-subactivity></app-subactivity>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

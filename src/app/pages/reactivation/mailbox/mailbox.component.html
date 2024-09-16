@@ -1,0 +1,166 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-diary" cdkScrollable>
+  <div class="flex flex-col w-full mx-auto px-6 sm:px-8">
+    <div class="row mt-5">
+      <div class="section-title row d-flex justify-content-between align-items-center">
+        <div class="col-md-4 col-sm-12 col-12 title">
+          Correo
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+
+      <div class="row gap-4">
+        <div class="col-md-5 bg-card">
+          <div class="c-messsager">
+
+            <div class="d-flex justify-content-center">
+              <button class="btn-write ml-3 px-1 sm:px-4 min-w-10">
+                <mat-icon svgIcon="mat_outline:add"></mat-icon>
+                <span>Redactar</span>
+              </button>
+            </div>
+
+            <div class="row mt-5">
+              <div class="col-md-6">
+                <mat-form-field class="flex-auto gt-xs:pr-3 no-border">
+                  <mat-select placeholder="Seleccionar">
+                    <mat-option value="">Reciente</mat-option>
+                    <mat-option value="">Antier</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="content-messenger">
+              <div class="card-messenger container-fluid card-seleccion">
+                <mat-icon class="icon-size-6 start-icon" svgIcon="heroicons_solid:star"></mat-icon>
+                
+                <div class="title-messenger row mt-2">
+                  <div class="col-md-2 img">
+                    <img src="../../../../assets/images/img-face.png" alt="">
+                  </div>
+
+                  <div class="col-md-9 card-content">
+                    <div>
+                      <h1>Equipo de regate</h1>
+                      <div class="d-flex align-items-center gap-2">
+                        <mat-icon class="icon-size-4" svgIcon="heroicons_mini:paper-clip"></mat-icon>
+                        <div class="time">
+                          3:30 PM
+                        </div>
+                      </div>
+                    </div>
+
+                    <h2>¿Cómo te va?</h2>
+                  
+                    <div class="info-messenger">
+                      Nulla pulvinar ex id orci tempor, id accumsan metus pretium. Proin mollis venenatis magn venenatis magnvenenatis magn venenatis magn...
+                    </div>
+                    
+                  </div>
+                </div>
+
+           
+              </div>
+
+              <div class="card-messenger container-fluid">
+                <!-- <mat-icon class="icon-size-6 start-icon" svgIcon="heroicons_solid:star"></mat-icon> -->
+                
+                <div class="title-messenger row mt-2">
+                  <div class="col-md-2 img">
+                    <img src="../../../../assets/images/img-face.png" alt="">
+                  </div>
+
+                  <div class="col-md-9 card-content">
+                    <div>
+                      <h1>Equipo de regate</h1>
+                      <div class="d-flex align-items-center gap-2">
+                        <mat-icon class="icon-size-4" svgIcon="heroicons_mini:paper-clip"></mat-icon>
+                        <div class="time">
+                          3:30 PM
+                        </div>
+                      </div>
+                    </div>
+
+                    <h2>¿Cómo te va?</h2>
+                  
+                    <div class="info-messenger">
+                      Nulla pulvinar ex id orci tempor, id accumsan metus pretium. Proin mollis venenatis magn venenatis magnvenenatis magn venenatis magn...
+                    </div>
+                  </div>
+
+
+                </div>
+
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 bg-card p-0">
+          <div class="container-fluid overflow-hidden c-inbox">
+            <div class="">
+
+
+              <div class="d-flex justify-content-end cursos-pointer">
+                <mat-icon svgIcon="mat_outline:cancel"></mat-icon>
+              </div>
+
+              <div class="header-title">
+                <div class="d-flex align-items-center">
+                  <img src="../../../../../../../assets//images/img-face.png" alt="">
+                  <div class="d-flex flex-column">
+                    <h1>RECK SOLUCIONES</h1>
+                    <span>Asunto: Vencimiento</span>
+                  </div>
+                </div>
+
+                <mat-icon class="icon-size-6" svgIcon="heroicons_solid:star"></mat-icon>
+              </div>
+
+
+              <div class="inbox-content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sodales ultricies dui, eget
+                scelerisque
+                ante dictum ut. Sed leo diam, rhoncus quis blandit sit amet, cursus non massa. Aliquam non dolor vitae
+                nisl
+                suscipit varius. Maecenas eu purus ex. Sed accumsan nunc ac eros semper, in posuere lacus feugiat.
+                <br>
+                <br>
+                Aenean mauris orci, elementum nec interdum et, mollis ut enim. Maecenas rhoncus justo id tellus porta,
+                id
+                faucibus diam varius. Curabitur et placerat quam. Praesent mattis urna ac turpis ultricies aliquet.
+                Donec
+                finibus aliquet tortor, suscipit efficitur nibh sagittis nec. Integer eu auctor ipsum. Nunc porttitor
+                lacinia erat sed porttitor. Nam imperdiet congue lacus eget blandit. Phasellus placerat dapibus magna,
+                eu
+                accumsan tellus cursus vel.
+              </div>
+
+              <div class="clip d-flex gap-3 align-items-center">
+                <mat-icon class="icon-size-6" svgIcon="heroicons_mini:paper-clip"></mat-icon>
+                <span>3 archivos adjuntos</span>
+              </div>
+
+            </div>
+          </div>
+          <div class="inbox-footer">
+            <button class="btn-gray" (click)="openInbox()">
+              <span>Responder</span>
+            </button>
+
+            <div class="c-column-btns mb-0">
+              <div class="btn-delete">
+                <mat-icon matTooltip="Eliminar">delete</mat-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

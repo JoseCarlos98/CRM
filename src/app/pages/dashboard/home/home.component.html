@@ -1,0 +1,687 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto c-home-dashboard" cdkScrollable>
+    <div class="bg-card section-padding">
+        <div class="flex flex-col w-full mx-auto px-6 sm:px-8">
+            <form class="row mt-3 mb-2" [formGroup]="formFilters">
+                <div class="col-12">
+                    <div class="section-title row d-flex justify-content-between align-items-center">
+                        <div class="col-md-4 col-sm-12 col-12 title mb-3">Dashboard</div>
+
+                        <div class="col-md-8 col-sm-12 col-12 btns-section mb-3">
+                            <div class="c-tickets mb-0">
+                                <mat-icon>language</mat-icon>
+                                <p>{{ objStatics?.totalEntries }}</p>
+                                <p class="font-light">Entradas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex align-items-center">
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Usuario</mat-label>
+                                <mat-select placeholder="Seleccionar" formControlName="user">
+                                    <mat-option value="">Todos</mat-option>
+                                    <mat-option [value]="cat.id" *ngFor="let cat of catAgents">
+                                        {{cat.first_name && cat.last_name ? cat?.first_name + ' ' + cat?.last_name :
+                                        cat?.username |titlecase }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Giro</mat-label>
+                                <mat-select placeholder="Seleccionar" formControlName="business">
+                                    <mat-option value="">Todos</mat-option>
+                                    <mat-option [value]="cat.business_id" *ngFor="let cat of catBusiness">{{cat?.business_name || '-'}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Campaña</mat-label>
+                                <mat-select placeholder="Seleccionar" formControlName="campaign">
+                                    <mat-option value="">Todos</mat-option>
+                                    <mat-option [value]="cat.campaign_id" *ngFor="let cat of catCampaing">{{cat?.campaign_name || '-'}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex col-sm-12 col-md-6 col-lg-3 col-12 pe-2">
+                            <mat-form-field class="flex-auto input-default">
+                                <mat-label>Rango de fechas</mat-label>
+                                <mat-date-range-input [max]="fechaHoy" [rangePicker]="campaignOnePicker"
+                                    [comparisonStart]="formFilters.value['rangeDateStart']"
+                                    [comparisonEnd]="formFilters.value['rangeDateEnd']">
+                                    <input matStartDate placeholder="Inicio" formControlName="rangeDateStart" />
+                                    <input matEndDate placeholder="Final" formControlName="rangeDateEnd" />
+                                </mat-date-range-input>
+
+                                <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-end">
+                        <div class="d-flex justify-content-end col-md-2 col-xl-2 col-12">
+                            <button class="btn-search " (click)="searchWithFilters()">
+                                <span>Filtrar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
+                matRipple [matMenuTriggerFor]="projectsMenu">
+                <div class="flex items-center">
+                    <div class="overflow-hidden">
+                        <div class="font-medium leading-6 truncate">{{selectedProject}}</div>
+                    </div>
+
+                    <div class="flex items-center justify-center pl-2">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_mini:chevron-down'"></mat-icon>
+                    </div>
+                </div>
+
+                <mat-menu #projectsMenu="matMenu" [xPosition]="'before'">
+                    <button mat-menu-item (click)="selectedProject='Estadísticas'">Estadísticas
+                    </button>
+                    <button mat-menu-item (click)="selectedProject='Graficas'">Graficas
+                    </button>
+                    <button mat-menu-item (click)="selectedProject='Productos'">Productos
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="flex-auto border-t section-content-padding">
+        <div class="w-full mx-auto">
+
+        <div class="row tap-options">
+            <span (click)="selectOption('Día')" [class.selected]="filterDayMonthYear === 'Día'">Día</span>
+            <span (click)="selectOption('Mes')" [class.selected]="filterDayMonthYear === 'Mes'">Mes</span>
+            <span (click)="selectOption('Año')" [class.selected]="filterDayMonthYear === 'Año'">Año</span>
+        </div>
+
+        <div *ngIf="selectedProject == 'Estadísticas'" style="overflow: hidden;">
+            <br>
+            <div class="row" style="overflow: hidden;">
+                <div class="col-md-6" >
+                    <div class="header flex-center">Cotizaciones</div>
+
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-5 mb-3 mb-sm-4">
+                                <div
+                                    class="open-card flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 heigth-100">
+                                    <div class="flex items-start justify-between">
+                                        <h1>Abiertas</h1>
+                                    </div>
+
+                                    <div class="flex flex-col items-center mt-2">
+                                        <div class="container">
+                                            <div
+                                                class="open-content-card row text-7xl sm:text-8xl font-bold tracking-tight leading-none">
+
+                                                <div class="col-md-6 d-flex flex-column">
+                                                    <h1>L</h1>
+                                                    <h2>{{ objStatics?.open?.lead }}</h2>
+                                                </div>
+                                                <div class="col-md-6 d-flex flex-column">
+                                                    <h1>C</h1>
+                                                    <h2>{{ objStatics?.open?.client }}</h2>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 mb-3 mb-sm-4 shoaw-dash">
+                                <div
+                                    class="sm:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden heigth-100">
+                                    <div class="flex items-start justify-between">
+                                        <div
+                                            class="text-lg font-bold tracking-tight leading-6 truncate mb-3">
+                                            Total</div>
+                                    </div>
+
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex flex-col">
+                                            <div
+                                                class="text-3xl font-semibold tracking-tight leading-tight">
+                                                <h2>{{ objStatics?.open?.total | currency }}</h2>
+                                            </div>
+                                            <div class="flex items-center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 mb-3 mb-sm-4">
+                                <div
+                                    class="open-card flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 heigth-100">
+                                    <div class="flex items-start justify-between">
+                                        <h1>Descartadas</h1>
+                                    </div>
+
+                                    <div class="flex flex-col items-center mt-2">
+                                        <div class="container">
+                                            <div
+                                                class="open-content-card row text-7xl sm:text-8xl font-bold tracking-tight leading-none">
+
+                                                <div class="col-md-6 d-flex flex-column">
+                                                    <h1>L</h1>
+                                                    <h2>{{ objStatics?.discarded?.lead }}</h2>
+                                                </div>
+                                                <div class="col-md-6 d-flex flex-column">
+                                                    <h1>C</h1>
+                                                    <h2>{{ objStatics?.discarded?.client }}</h2>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 mb-3 mb-sm-4 shoaw-dash">
+                                <div
+                                    class="sm:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden heigth-100">
+                                    <div class="flex items-start justify-between">
+                                        <div
+                                            class="text-lg font-bold tracking-tight leading-6 truncate mb-3">Total</div>
+                                    </div>
+
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex flex-col">
+                                            <div
+                                                class="text-3xl font-semibold tracking-tight leading-tight">
+                                                <h2>{{ objStatics?.discarded?.total | currency }}</h2>
+                                            </div>
+                                            <div class="flex items-center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 mb-3 mb-sm-4">
+                                <div class="open-card flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 heigth-100">
+                                    <div class="flex items-start justify-between">
+                                        <h1>Cerradas</h1>
+                                    </div>
+
+                                    <div class="flex flex-col items-center mt-2">
+                                        <div class="container">
+                                            <div
+                                                class="open-content-card row text-7xl sm:text-8xl font-bold tracking-tight leading-none">
+                                                <div>
+                                                    <h3>{{ objStatics?.closedQuotesSales }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-7 mb-3 mb-sm-4 shoaw-dash">
+                                <div
+                                    class="sm:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden heigth-100">
+                                    <div class="flex items-start justify-between">
+                                        <div
+                                            class="text-lg font-bold tracking-tight leading-6 truncate mb-3">
+                                            Total</div>
+                                    </div>
+
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex flex-col">
+                                            <div
+                                                class="text-3xl font-semibold tracking-tight leading-tight">
+                                                <h3>{{ objStatics?.totalClosedQuotesSales | currency }}</h3>
+
+                                            </div>
+                                            <div class="flex items-center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="header flex-center">Ventas</div>
+                    <div class="content">
+                        <div class="row p-1">
+                            <div class="col-md-5 mb-3 mb-sm-4">
+                                <div
+                                    class="open-card flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 heigth-100">
+                                    <div class="flex items-start justify-between">
+                                        <h1>Cerradas</h1>
+                                    </div>
+
+                                    <div class="flex flex-col items-center mt-2">
+                                        <div class="container">
+                                            <div
+                                                class="open-content-card row text-7xl sm:text-8xl font-bold tracking-tight leading-none">
+                                                <div>
+                                                    <h3>{{ objStatics?.closedQuotesSales }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7 mb-3 mb-sm-4 shoaw-dash">
+                                <div
+                                    class="sm:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden heigth-100">
+                                    <div class="flex items-start justify-between">
+                                        <div
+                                            class="text-lg font-bold tracking-tight leading-6 truncate mb-3">
+                                            Total</div>
+                                    </div>
+
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex flex-col">
+                                            <div
+                                                class="text-3xl font-semibold tracking-tight leading-tight">
+                                                <h3>{{ objStatics?.totalClosedQuotesSales | currency }}</h3>
+                                            </div>
+                                            <div class="flex items-center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row day mt-4">
+                <div class="col-md-12">
+                    <div class="header flex-center">
+                        Empresas
+                    </div>
+
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-4 mb-3 mb-sm-4">
+                                <div
+                                    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 min-heigt">
+                                    <div class="flex items-start justify-between">
+                                        <div class="text-lg font-bold tracking-tight leading-6 truncate">
+                                            Estatus</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="content-list">
+                                            <div *ngFor="let data of objStatics?.dataStatus">
+                                                <p>{{ data?.name }}</p>
+                                                <span>{{ data?.total }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3 mb-sm-4">
+                                <div
+                                    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 min-heigt">
+                                    <div class="flex items-start justify-between">
+                                        <div
+                                            class="text-lg font-bold tracking-tight leading-6 truncate">
+                                            Ranking de paises</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="content-list">
+                                            <div *ngFor="let data of objStatics?.rankingCompaniesCountry">
+                                                <p>{{ data?.name }}</p>
+                                                <span>{{ data?.total }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3 mb-sm-4">
+                                <div
+                                    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 min-heigt">
+                                    <div class="flex items-start justify-between">
+                                        <div
+                                            class="text-lg font-bold tracking-tight leading-6 truncate">
+                                            Categorías</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="content-list">
+                                            <div *ngFor="let data of objStatics?.categories">
+                                                <p>{{ data?.name }}</p>
+                                                <span>{{ data?.total }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5 p-1" *ngIf="latestRegisteredCompanies?.length">
+                <app-table [displayedColumns]="displayedColumnsRegister" [dataDummy]="latestRegisteredCompanies"
+                    [type]="'register'"></app-table>
+            </div>
+            <!-- <div class="row">
+                <app-table [displayedColumns]="displayedColumnsBought" [dataDummy]="dataDummyBought"
+                    [type]="'bought'"></app-table>
+            </div> -->
+            <br>
+
+            <div class="row day mt-4">
+                <div class="col-md-12">
+                    <div class="header flex-center">
+                        Clientes
+                    </div>
+
+                    <div class="content">
+                        <div class="row p-1" *ngIf="customersPurchasedMost?.length">
+                            <app-table class="mt-0" [displayedColumns]="displayedColumnsClientsCountry" [dataDummy]="customersPurchasedMost" [type]="'clients'"></app-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row day mt-4">
+                <div class="col-md-12">
+                    <div class="header flex-center">
+                        Países
+                    </div>
+
+                    <div class="content">
+                        <div class="row p-1" *ngIf="countriesBuyMost?.length">
+                            <app-table class="mt-0" [displayedColumns]="displayedColumnsClientsCountry"
+                                [dataDummy]="countriesBuyMost" [type]="'country'"></app-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedProject == 'Graficas'">
+            <div class="row day mt-4">
+                <div class="col-md-12">
+                    <div class="header flex-center">
+                        Ventas
+                    </div>
+
+                    <div class="content container-fluid">
+                        <div class="row">
+                            <div
+                                class="col-md-12 flex flex-col flex-auto bg-card shadow rounded-2xl p-4">
+                                <div class="flex items-start justify-between m-6 mb-0">
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                        Total de campañas vs total de ventas <br>
+                                    </div>
+                                    <div class="ml-2">
+                                        <button class="h-6 min-h-6 px-2 rounded-full bg-hover"
+                                            mat-button [matMenuTriggerFor]="conversionMenu">
+                                            <span class="font-medium text-sm text-secondary">12
+                                                meses</span>
+                                        </button>
+                                        <mat-menu #conversionMenu="matMenu">
+                                            <button mat-menu-item>1 mes</button>
+                                            <button mat-menu-item>3 meses</button>
+                                            <button mat-menu-item>9 meses</button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                                <div class="flex items-start mt-6 mx-6">
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12">
+                                        <div class="flex flex-col">
+                                            <div class="flex items-start mt-2">
+                                                <div
+                                                    class="text-4xl font-bold tracking-tight leading-none">
+                                                    0%</div>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <div class="font-medium text-secondary leading-5">
+                                                    Crecimiento
+                                                    mensual promedio</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex flex-col">
+                                            <div class="flex items-start mt-2">
+                                                <div
+                                                    class="text-4xl font-bold tracking-tight leading-none">
+                                                    0%</div>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <div class="font-medium text-secondary leading-5">
+                                                    Ingreso
+                                                    mensual promedio</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col flex-auto mt-3 h-100">
+                                    <apx-chart class="flex-auto w-full h-full"
+                                        [chart]="chartVisitorsVsPageViews.chart"
+                                        [colors]="chartVisitorsVsPageViews.colors"
+                                        [dataLabels]="chartVisitorsVsPageViews.dataLabels"
+                                        [grid]="chartVisitorsVsPageViews.grid"
+                                        [legend]="chartVisitorsVsPageViews.legend"
+                                        [series]="chartVisitorsVsPageViews.series"
+                                        [stroke]="chartVisitorsVsPageViews.stroke"
+                                        [tooltip]="chartVisitorsVsPageViews.tooltip"
+                                        [xaxis]="chartVisitorsVsPageViews.xaxis"
+                                        [yaxis]="chartVisitorsVsPageViews.yaxis">
+                                    </apx-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row day mt-5">
+                <div class="col-md-12">
+                    <div class="header flex-center">
+                        Cotizaciones
+                    </div>
+
+                    <div class="content container-fluid">
+                        <div class="row">
+                            <div class="flex flex-col flex-auto bg-card shadow rounded-2xl p-4">
+                                <div class="flex items-start justify-between m-6 mb-0">
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                        Total de campañas vs total de ventas<br>
+                                    </div>
+                                    <div class="ml-2">
+                                        <button class="h-6 min-h-6 px-2 rounded-full bg-hover"
+                                            mat-button [matMenuTriggerFor]="conversionMenu">
+                                            <span class="font-medium text-sm text-secondary">12
+                                                meses</span>
+                                        </button>
+                                        <mat-menu #conversionMenu="matMenu">
+                                            <button mat-menu-item>1 mes</button>
+                                            <button mat-menu-item>3 meses</button>
+                                            <button mat-menu-item>9 meses</button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                                <div class="flex items-start mt-6 mx-6">
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12">
+                                        <div class="flex flex-col">
+                                            <div class="flex items-start mt-2">
+                                                <div
+                                                    class="text-4xl font-bold tracking-tight leading-none">
+                                                    0%</div>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <div class="font-medium text-secondary leading-5">
+                                                    Crecimiento
+                                                    mensual promedio</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex flex-col">
+                                            <div class="flex items-start mt-2">
+                                                <div
+                                                    class="text-4xl font-bold tracking-tight leading-none">
+                                                    0%</div>
+                                            </div>
+
+                                            <div class="flex items-center">
+                                                <div class="font-medium text-secondary leading-5">
+                                                    Ingreso
+                                                    mensual promedio</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col flex-auto mt-3 h-100">
+                                    <apx-chart class="flex-auto w-full h-full"
+                                        [chart]="chartVisitorsVsPageViews.chart"
+                                        [colors]="chartVisitorsVsPageViews.colors"
+                                        [dataLabels]="chartVisitorsVsPageViews.dataLabels"
+                                        [grid]="chartVisitorsVsPageViews.grid"
+                                        [legend]="chartVisitorsVsPageViews.legend"
+                                        [series]="chartVisitorsVsPageViews.series"
+                                        [stroke]="chartVisitorsVsPageViews.stroke"
+                                        [tooltip]="chartVisitorsVsPageViews.tooltip"
+                                        [xaxis]="chartVisitorsVsPageViews.xaxis"
+                                        [yaxis]="chartVisitorsVsPageViews.yaxis">
+                                    </apx-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedProject == 'Productos'">
+            <div class="row day mt-4">
+                <div class="col-md-12">
+                    <div class="header flex-center">
+                        Productos y lugares
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 flex flex-col flex-auto heigth-100">
+                    <apx-chart class="flex-auto w-full h-80"
+                    [chart]="chartGithubIssues.chart"
+                    [colors]="chartGithubIssues.colors"
+                    [dataLabels]="chartGithubIssues.dataLabels"
+                    [grid]="chartGithubIssues.grid"
+                    [labels]="chartGithubIssues.labels"
+                    [legend]="chartGithubIssues.legend"
+                    [plotOptions]="chartGithubIssues.plotOptions"
+                    [series]="chartGithubIssues.series"
+                    [states]="chartGithubIssues.states"
+                    [stroke]="chartGithubIssues.stroke"
+                    [tooltip]="chartGithubIssues.tooltip"
+                    [xaxis]="chartGithubIssues.xaxis"
+                    [yaxis]="chartGithubIssues.yaxis">
+                </apx-chart>
+                </div>
+                <div class="col-md-6">
+                    <div class="row p-1">
+                        <div class="col-md-6 mb-3">
+                            <div class="open-card bg-1 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 heigth-100">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="container">
+                                        <div
+                                            class="open-content-card-product row text-7xl sm:text-8xl font-bold tracking-tight leading-none">
+                                            <div>
+                                                <h1>0</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <span class="span-product">Total de productos vendidos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="open-card bg-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden mb-md-0 heigth-100">
+                                <div class="flex flex-col items-center mt-2">
+                                    <div class="container">
+                                        <div class="open-content-card-product row text-7xl sm:text-8xl font-bold tracking-tight leading-none">
+                                            <div>
+                                                <h2>$0</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <span class="span-product">Monto total vendido</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row day mt-5">
+                <div class="col-md-12">
+                    <div class="header flex-center">
+                        Productos / articulos más vendidos
+                    </div>
+
+                    <div class="content container-fluid">
+                        <div class="row mb-5">
+                            <app-table 
+                                [displayedColumns]="displayedColumnsRegister"
+                                [dataDummy]="dataDummyRegister" 
+                                [type]="'register'"
+                                [searchAndExcel]="true"></app-table>
+                        </div>
+                    </div>
+
+                    <div class="content container-fluid">
+                        <div class="row mb-5">
+                            <app-table 
+                            [displayedColumns]="displayedColumnsRegister"
+                            [dataDummy]="dataDummyRegister" 
+                            [type]="'register'"
+                            [searchAndExcel]="true"></app-table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,62 @@
+<div class="container-fluid p-0 overflow-hidden c-modal-quotes">
+    <div class="modal-header">
+        <p class="titulo-modal">{{ data ? 'Editar' : 'Registrar nuevo'}} precio</p>
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row p-5 d-flex">
+        <p class="mb-6">*Campos obligatorios</p>
+        <form class="col-12 modal-content-scroll" [formGroup]="formData">
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Código</mat-label>
+                            <input formControlName="code" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Porcentaje de IVA</mat-label>
+                            <input formControlName="tax_percentage" matInput>
+                            <mat-error *ngIf="formData.get('tax_percentage').hasError('invalidPercentage')">
+                                El porcentaje de IVA no puede ser mayor a 100.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Categoria de productos a los que aplica</mat-label>
+                            <mat-select [formControl]="productsApplies" placeholder="Seleccionar">
+                                <mat-option [value]="cat.product_category_id "
+                                    *ngFor="let cat of catProductCategories">{{cat?.category_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Precio unitario</mat-label>
+                            <input formControlName="price" class="text-right" matInput type="number">
+                            <span matPrefix>$</span>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Moneda</mat-label>
+                            <mat-select formControlName="currency" placeholder="Seleccionar">
+                                <mat-option [value]="cat.currency_id "
+                                    *ngFor="let cat of catCurrency">{{cat?.currency_abrev}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-end create">
+                    <div class="d-flex justify-content-end col-md-2 col-xl-2 col-12 pt-md-2">
+                        <button class="btn-action-add" [disabled]="!formData.valid" (click)="actionSave()">
+                            <span>Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

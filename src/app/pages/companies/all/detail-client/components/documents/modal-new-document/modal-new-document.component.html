@@ -1,0 +1,49 @@
+<div class="container-fluid p-0 overflow-hidden c-modal-document">
+
+    <div class="modal-header">
+        <p class="titulo-modal">Cargar nuevo documento</p>
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row p-5 d-flex">
+
+        <form class="col-12">
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="load flex-center">
+                            <div class="d-flex flex-column justify-content-center align-items-sm-center gap-4">
+                                <mat-icon class="icon-size-6" svgIcon="mat_solid:upload"></mat-icon>
+                                <span>Arrastre o seleccione los archivos que desea subir</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Nombre del archivo</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Fecha</mat-label>
+                            <input matInput [matDatepicker]="picker1">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center create mb-5">
+                    <div class="d-flex justify-content-center col-md-4 col-xl-4 col-12 pt-md-2">
+                        <button class="btn-action-add" (click)="save()">
+                            <span>Subir archivos</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

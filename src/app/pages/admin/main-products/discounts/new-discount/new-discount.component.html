@@ -1,0 +1,234 @@
+<div class="container-fluid p-0 overflow-hidden bg-white c-new-bono">
+
+    <div class="return-header">
+        <mat-icon svgIcon="mat_solid:arrow_back" (click)="toBack()"></mat-icon>
+        <p class="titulo-modal">{{ url.includes('editar') ? 'Editar' : 'Registrar nuevo'}} descuento</p>
+
+    </div>
+
+    <div class="row form-padding d-flex">
+
+        <p class="mb-6">*Campos obligatorios</p>
+
+        <form class="col-12">
+            <div>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Código</mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Nombre*</mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="separationSection">
+                    <h1>Escala de descuentos por volumen / promoción</h1>
+                    <div class="row" *ngFor="let ejecucion of valuesSpecifications; let i = index;">
+
+                        <div class="col-md-3">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Rango de lugares de: </mat-label>
+                                <input class="text-right" matInput>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-3">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>a: </mat-label>
+                                <input class="text-right" matInput>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-3">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Porcentaje:</mat-label>
+                                <input class="text-right" matInput>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-3 d-flex align-items-center justify-content-center c-column-btns mt-5">
+                            <div class="btn-delete" (click)="deleteSpecifications(i)">
+                                <mat-icon matTooltip="Eliminar">delete</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-start justify-content-lg-start mt-5 mb-6">
+                    <button class="btn-gray color-385A6D" (click)="addFormSpecifications()">
+                        <span>Agegar escala</span>
+                    </button>
+                </div>
+
+                <hr>
+
+                <div class="row mb-5">
+                    <div class="flex flex-col mt-8 gt-sm:mt-0 gt-sm:ml-16 inputsRadioGroupBold">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-check-bold mt-1">
+                                    <mat-checkbox class="mb-2" [checked]="true">
+                                        Aplicar por productos:
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-check-bold mt-1">
+                                    <mat-checkbox class="mb-2" [checked]="false">
+                                        Aplicar por categoría:
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col-md-6">
+                        <div class="row mb-5">
+                            <div class="flex flex-col mt-8 gt-sm:mt-0 gt-sm:ml-16 inputsRadioGroup">
+                                <mat-radio-group class="d-flex row">
+                                    <div class="col-md-6">
+                                        <mat-radio-button class="mb-2"> <span class="font-14-500-4B5062">Todas los productos excepto las marcadas</span> </mat-radio-button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-radio-button class="mb-2"> <span class="font-14-500-4B5062">Ningun producto solo los marcados</span> </mat-radio-button>
+                                    </div>
+                                </mat-radio-group>
+                            </div>
+                            
+                            <div class="col-12 mt-5">
+                                <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                    <mat-select multiple placeholder="Seleccionar">
+                                        @for (topping of toppingList; track topping) {
+                                        <mat-option [value]="topping">{{topping}}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row mb-5">
+                            <div class="flex flex-col mt-8 gt-sm:mt-0 gt-sm:ml-16 inputsRadioGroup">
+                                <mat-radio-group class="d-flex row">
+                                    <div class="col-md-6">
+                                        <mat-radio-button class="mb-2"> <span class="font-14-500-4B5062">Todas los productos excepto las marcadas</span> </mat-radio-button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-radio-button class="mb-2"> <span class="font-14-500-4B5062">Ningun producto solo los marcados</span> </mat-radio-button>
+                                    </div>
+                                </mat-radio-group>
+                            </div>
+
+                            <div class="col-12 mt-5">
+                                <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                    <mat-select multiple placeholder="Seleccionar">
+                                        @for (topping of toppingList; track topping) {
+                                        <mat-option [value]="topping">{{topping}}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="flex flex-col mt-8 gt-sm:mt-0 gt-sm:ml-16 inputsRadioGroupBold">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-check mt-1">
+                                    <mat-checkbox class="mb-2" [checked]="true">
+                                        Aplicar por país:
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-check mt-1">
+                                    <mat-checkbox class="mb-2" [checked]="false">
+                                        Aplicar por moneda:
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col-md-6">
+                        <div class="row mb-5">
+                            <div class="flex flex-col mt-8 gt-sm:mt-0 gt-sm:ml-16 inputsRadioGroup">
+                                <mat-radio-group class="d-flex row">
+                                    <div class="col-md-6">
+                                        <mat-radio-button class="mb-2"> <span class="font-14-500-4B5062">Todas los productos excepto las marcadas</span> </mat-radio-button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-radio-button class="mb-2"> <span class="font-14-500-4B5062">Ningun producto solo los marcados</span> </mat-radio-button>
+                                    </div>
+                                </mat-radio-group>
+                            </div>
+                            
+                            <div class="col-12 mt-5">
+                                <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                    <mat-select multiple placeholder="Seleccionar">
+                                        @for (topping of toppingList; track topping) {
+                                        <mat-option [value]="topping">{{topping}}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row mb-5">
+                            <div class="flex flex-col mt-8 gt-sm:mt-0 gt-sm:ml-16 inputsRadioGroup">
+                                <mat-radio-group class="d-flex row">
+                                    <div class="col-md-6">
+                                        <mat-radio-button class="mb-2"> <span class="font-14-500-4B5062">Todas los productos excepto las marcadas</span> </mat-radio-button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-radio-button class="mb-2"> <span class="font-14-500-4B5062">Ningun producto solo los marcados</span> </mat-radio-button>
+                                    </div>
+                                </mat-radio-group>
+                            </div>
+
+                            <div class="col-12 mt-5">
+                                <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                    <mat-select multiple placeholder="Seleccionar">
+                                        @for (topping of toppingList; track topping) {
+                                        <mat-option [value]="topping">{{topping}}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row d-flex justify-content-end align-items-center mb-3 mt-5">
+                    <div class="d-flex justify-content-end col-md-3 col-xl-3 col-12 pt-md-2 mt-6">
+                        <button class="btn-action-add" (click)="save()">
+                            <span>Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

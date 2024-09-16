@@ -1,0 +1,67 @@
+
+<div class="relative flex flex-col flex-auto min-w-0 overflow-hidden c-call">
+    <div class="flex flex-col flex-auto px-6">
+        <div class="w-full max-w-3xl">
+            <div class="mt-8 c-scroll">
+                <ol>
+                    <ng-container *ngFor="let activity of calls; let i = index; let first = first; let last = last; trackBy: trackByFn">
+                        <ng-container *ngIf="first || !isSameDay(activity?.date, calls[i - 1]?.date)">
+                            <li class="relative flex py-7">
+                                <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-4B5062 text-on-primary">
+                                    <!-- {{getRelativeFormat(activity.date) | titlecase}} -->
+                                    {{activity?.date | titlecase}}
+
+                                </div>
+                            </li>
+                        </ng-container>
+
+                        <li class="relative flex py-7">
+                            <ng-container *ngIf="!last && calls[i + 1] && isSameDay(activity?.date, calls[i + 1]?.date)">
+                                <div class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600">
+                                </div>
+                            </ng-container>
+
+                            <div class="relative flex flex-auto">
+                                <ng-container>
+                                    <div
+                                        class="flex shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full failed-call ">
+                                        <mat-icon class="text-white" svgIcon="mat_solid:call"></mat-icon>
+                                    </div>
+                                </ng-container>
+
+                                <div class="flex flex-col flex-auto items-start">
+                                    <ng-container *ngIf="activity.activity">
+                                        <div class="call-title">{{activity.activity}}</div>
+                                    </ng-container>
+
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5">
+                                        <div class="d-flex flex-column">
+                                            <div class="text-secondary">
+                                                {{activity.dateName | formatoFecha}}
+                                            </div>
+
+                                            <div class="text-secondary d-flex flex-column mt-1">
+                                                Inició: - <br>
+                                                Finalizó: -
+                                              </div>
+
+                                            <div class="call-agent">
+                                                {{activity.agent }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ng-container *ngIf="activity.description">
+                                        <div class="mt-4 py-4 px-5 rounded-lg call-comment">
+                                            {{activity.description}}</div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </li>
+                    </ng-container>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

@@ -41,45 +41,6 @@ $light-base: (
     )
 );
 
-/* Set the base colors for dark themes */
-$dark-base: (
-    foreground: (
-        base: #FFFFFF,
-        divider: rgba(241, 245, 249, 0.12), /* slate.100 + opacity */
-        dividers: rgba(241, 245, 249, 0.12), /* slate.100 + opacity */
-        disabled: #475569, /* slate.600 */
-        disabled-button: #1E293B, /* slate.800 */
-        disabled-text: #475569, /* slate.600 */
-        elevation: #000000,
-        hint-text: #64748B, /* slate.500 */
-        secondary-text: #94A3B8, /* slate.400 */
-        icon: #F1F5F9, /* slate.100 */
-        icons: #F1F5F9, /* slate.100 */
-        mat-icon: #94A3B8, /* slate.400 */
-        text: #FFFFFF,
-        slider-min: #FFFFFF,
-        slider-off: #64748B, /* slate.500 */
-        slider-off-active: #94A3B8 /* slate.400 */
-    ),
-    background: (
-        status-bar: #0F172A, /* slate.900 */
-        app-bar: #0F172A, /* slate.900 */
-        background: #0F172A, /* slate.900 */
-        hover: rgba(255, 255, 255, 0.05),
-        card: #1E293B, /* slate.800 */
-        dialog: #1E293B, /* slate.800 */
-        disabled-button: rgba(15, 23, 42, 0.38), /* slate.900 + opacity */
-        raised-button: #0F172A, /* slate.900 */
-        focused-button: #E2E8F0, /* slate.200 */
-        selected-button: rgba(255, 255, 255, 0.05),
-        selected-disabled-button: #1E293B, /* slate.800 */
-        disabled-button-toggle: #0F172A, /* slate.900 */
-        unselected-chip: #475569, /* slate.600 */
-        disabled-list-option: #E2E8F0, /* slate.200 */
-        tooltip: #64748B /* slate.500 */
-    )
-);
-
 /* Include the core Angular Material styles */
 @include mat.core();
 
@@ -143,12 +104,6 @@ $dark-base: (
     $light-theme: map.merge(
             (color: $light-theme-colors),
             $light-theme-colors
-    );
-
-    $dark-theme-colors: map.merge(map.get($dark-theme, color), $dark-base);
-    $dark-theme: map.merge(
-            (color: $dark-theme-colors),
-            $dark-theme-colors
     );
 
     /* Generate and encapsulate Angular Material themes */

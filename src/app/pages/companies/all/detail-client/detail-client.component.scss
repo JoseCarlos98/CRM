@@ -1,0 +1,72 @@
+.c-detail-client {
+    .card-client {
+        padding: 35px;
+
+        >h2 {
+            color: #1E293B;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 40px 0;
+        }
+
+        .client-info {
+            > div {
+                > div {
+                    margin-bottom: 30px;
+                }
+                p {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #646878;
+                }
+                
+               > span {
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #646878;
+                }
+            }
+        }
+
+        .card-header-clients {
+            >div {
+                height: 170px;
+                margin: 30px;
+            }
+
+            >div:nth-child(1) {
+                border-right: 2px solid #385A6D;
+
+                img {
+                    width: 107px;
+                    height: 107px;
+                }
+            }
+
+        }
+
+        .title-info-client {
+            height: auto;
+
+
+            > h1 {
+                font-size: 32px;
+                font-weight: 700;
+                color: #1E293B;
+                margin-bottom: 14px;
+            }
+
+            > span {
+                color: #646878;
+                font-size: 22px;
+                font-weight: 400;
+                margin-bottom: 30px;
+            }
+
+        }
+    }
+
+    ::ng-deep .mat-mdc-tab-labels {
+        justify-content: center!important;
+    }
+}

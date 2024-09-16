@@ -1,0 +1,27 @@
+::ng-deep .c-company {
+    .mat-mdc-tab-labels {
+        display: none!important;
+    }
+
+    
+    ::ng-deep .mat-mdc-tab-body-content {
+        padding: 0!important;
+    }
+
+    .contenedor-scroll-tabla {
+        overflow-y: unset!important;
+        .table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h1,span {
+                margin: 0;
+                font-size: 22px;
+                font-weight: 700;
+                text-align: left;
+                color: #1E293B;
+            }
+        }
+    }
+
+}

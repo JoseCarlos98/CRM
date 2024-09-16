@@ -1,0 +1,113 @@
+<div class="grid grid-cols-1 w-full min-w-0">
+    <div class="row d-flex">
+        <div class="d-flex col-12 d-flex justify-content-end pt-md-2 mt-5">
+            <button class="btn-yellow-newRegister ml-3 px-1 sm:px-4 min-w-10" mat-flat-button>
+                <span class="hidden sm:inline-block" (click)="uploadDocument()">Cargar documento</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row inset-0 flex flex-col min-w-0 overflow-hidden mt-5 c-files">
+    <div class="row flex flex-auto">
+
+        <div class="col-6 p-6 md:p-8" [ngClass]="{'col-12': !seeDocument}">
+            <div>
+                <div class="flex flex-wrap -m-2 gap-6">
+                    <ng-container *ngFor="let file of items; trackBy:trackByFn">
+
+                        <a (click)="seeDocumentInfo(file)"
+                            class="flex flex-col w-40 h-40 m-2 p-4 shadow rounded-2xl cursor-pointer bg-card">
+                            <div class="aspect-[9/6]">
+                                <div class="flex items-center justify-center h-full">
+                                    <!-- Icons -->
+                                    <div class="relative">
+                                        <mat-icon class="color-icon-document icon-size-14 text-hint opacity-50"
+                                            [svgIcon]="'heroicons_mini:document-duplicate'"></mat-icon>
+
+                                        <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white"
+                                            [class.bg-red-600]="file.type === 'PDF'"
+                                            [class.bg-blue-600]="file.type === 'DOC'"
+                                            [class.bg-green-600]="file.type === 'XLS'"
+                                            [class.bg-gray-600]="file.type === 'TXT'"
+                                            [class.bg-amber-600]="file.type === 'JPG'">
+                                            {{file.type.toUpperCase()}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col flex-auto justify-center text-center text-sm font-medium">
+                                <div class="truncate" [matTooltip]="file.name">{{file.name}}</div>
+
+                                <ng-container *ngIf="file.contents">
+                                    <div class="text-secondary truncate">{{file.contents}}</div>
+                                </ng-container>
+
+                            </div>
+                        </a>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 p-6 md:p-8 " *ngIf="seeDocument">
+            <div class="info-document">
+
+                <div class="content-document">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="formt">
+                                <div class="relative mb-5">
+                                    <mat-icon class="icon-size-14 text-hint opacity-50 color-icon-document"[svgIcon]="'heroicons_mini:document-duplicate'"></mat-icon>
+    
+                                    <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white"
+                                        [class.bg-red-600]="documentSelected.type === 'PDF'"
+                                        [class.bg-blue-600]="documentSelected.type === 'DOC'"
+                                        [class.bg-green-600]="documentSelected.type === 'XLS'"
+                                        [class.bg-gray-600]="documentSelected.type === 'TXT'"
+                                        [class.bg-amber-600]="documentSelected.type === 'JPG'">
+                                        {{documentSelected.type.toUpperCase()}}
+                                    </div>
+                                </div>
+
+                                <span>{{documentSelected?.name}}</span>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-12 information-doc">
+                            <h1>Información</h1>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h1>Fecha en que se subió al CRM</h1>
+                                <span>01/01/2024</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-5">
+
+                            <div class="d-flex justify-content-center col-md-4 col-xl-4 col-12 pt-md-2 width-100 align-items-center gap-5">
+                                <button class="btn-action-add" >
+                                    <span>Descargar</span>
+                                </button>
+
+                                <div class="c-column-btns d-flex align-content-center gap-5 mt-5">
+                                    <div class="btn-edit" (click)="uploadDocument()">
+                                        <mat-icon matTooltip="Editar">edit_square</mat-icon>
+                                    </div>
+            
+                                    <div class="btn-delete">
+                                        <mat-icon matTooltip="Eliminar">delete</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

@@ -1,0 +1,33 @@
+<div class="container-fluid p-0 overflow-hidden">
+
+    <div class="modal-header">
+        <p class="titulo-modal">Finalizar actividad</p>
+
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row p-5 d-flex">
+        <p class="mb-6">*Campos obligatorios</p>
+
+        <form class="col-12 modal-content-scroll" [formGroup]="formData">
+            <div class="row">
+                <div class="col-md-12">
+                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                        <mat-label>Fecha de finalización</mat-label>
+                        <input formControlName="end_date" matInput [matDatepicker]="picker1">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-end">
+                <div class="d-flex justify-content-end col-md-2 col-xl-2 col-12 pt-md-2">
+                    <button class="btn-action-add" [disabled]="!formData.valid" (click)="actionSave()">
+                        <span>Guardar</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

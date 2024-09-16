@@ -1,0 +1,85 @@
+<div class="w-full max-w-3xl">
+    <form [formGroup]="formData">
+        <div class="w-full"><div class="text-secondary"></div></div>
+
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>Nombre del usuario</mat-label>
+                    <input formControlName="username" matInput>
+                </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-emphasized-affix w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>Usuario slack</mat-label>
+                    <input formControlName="user_id_slack" matInput>
+                </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-emphasized-affix w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="first_name" matInput>
+                </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>Apellido</mat-label>
+                    <input formControlName="last_name" matInput>
+                </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>Correo</mat-label>
+                    <input formControlName="email" matInput>
+                </mat-form-field>
+            </div>
+            
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>Teléfono</mat-label>
+                    <input (input)="configInput($event, 'phone_number')" maxlength="10" type="text" formControlName="phone_number" matInput>
+                </mat-form-field>
+            </div>
+            
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>Identificado de voz IP</mat-label>
+                    <input (input)="configInput($event, 'voice_identifier')" maxlength="5" type="text" formControlName="voice_identifier" matInput>
+                </mat-form-field>
+            </div>
+            
+            <div class="sm:col-span-2">
+                <div class="flex-auto gt-xs:pr-3 width-100 mt-4 mb-4">
+                    <div class="row d-flex up">
+                        <div class="col-md-8">
+                            <div class="d-flex flex-column inputNewRegister">
+                                <mat-label class="mb-1">{{ user.profile_picture ? 'Cambiar imagen' : 'Imagen'}}</mat-label>
+                                <input type="file" (change)="onFileChange($event)" name="logo" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              
+            <div class="sm:col-span-4">
+                <div class="d-flex flex-column inputNewRegister">
+                    <mat-label class="mb-1">Imagen actual</mat-label>
+                    <img style="width: 350px" [src]="user.profile_picture" alt="">    
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3">
+            <button mat-stroked-button type="button" [disabled]="!actionCancel" (click)="cancel()">
+                Cancelar
+            </button>
+            <button class="btn-action-add" [disabled]="!actionCancel" (click)="actionSave()">
+                <span>Guardar</span>
+            </button>
+        </div>
+    </form>
+</div>

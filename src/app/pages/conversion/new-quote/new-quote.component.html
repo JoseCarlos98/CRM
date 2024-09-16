@@ -1,0 +1,261 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto bg-white c-new-quote" cdkScrollable>
+    <div class="header-level1" *ngIf="url.includes('dashboard')">
+        <h1>Crear nueva cotización</h1>
+    </div>
+
+    <div class="return-header" *ngIf="!url.includes('dashboard')">
+        <mat-icon svgIcon="mat_solid:arrow_back" (click)="toBack()"></mat-icon>
+        <p class="titulo-modal form-padding-title">{{ url.includes('editar') ? 'Editar' : 'Registrar nuevo'}} cotización
+        </p>
+    </div>
+
+    <div class="return-header" *ngIf="url.includes('dashboard')">
+        <p class="titulo-modal">Crear nueva cotización</p>
+    </div>
+
+    <div class="row form-padding d-flex">
+        <p class="mb-6">*Campos obligatorios</p>
+        <form class="col-12 new-content" [formGroup]="formData">
+            <div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <form class="example-form">
+                            <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                <mat-label>Buscar empresas</mat-label>
+                                <input type="text" placeholder="Buscar por nombre..." matInput [formControl]="company"
+                                    [matAutocomplete]="auto">
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-option *ngFor="let cat of filteredOptions | async" [value]="cat.company_name"
+                                        (click)="companySelected = cat.company_id">
+                                        {{ cat.company_name || '-' }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-icon class="cursor-pointer" *ngIf="companySelected" matTooltip="Limpiar"
+                                    (click)="cleanCompany()">close</mat-icon>
+                            </mat-form-field>
+                        </form>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Contacto</mat-label>
+                            <mat-select formControlName="contact" placeholder="Seleccionar">
+                                <mat-option [value]="cat.contact_id" *ngFor="let cat of catContacts">{{cat?.full_name ||
+                                    '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Agente a asignar</mat-label>
+                            <mat-select formControlName="user" placeholder="Seleccionar">
+                                <mat-option [value]="cat.id" *ngFor="let cat of catAgents">
+                                    {{cat.first_name && cat.last_name ? cat?.first_name + ' ' + cat?.last_name :
+                                    cat?.username |titlecase }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Forma de pago</mat-label>
+                            <mat-select formControlName="payment_method" placeholder="Seleccionar">
+                                <mat-option [value]="cat.payment_method_id"
+                                    *ngFor="let cat of catPaymentMethod">{{cat?.payment_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                            <mat-label>Campaña</mat-label>
+                            <mat-select formControlName="campaign" placeholder="Seleccionar">
+                                <mat-option [value]="cat.campaign_id"
+                                    *ngFor="let cat of catCampaing">{{cat?.campaign_name || '-'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row iva">
+                    <div class="flex flex-col mt-4 gt-sm:mt-0 gt-sm:ml-16 inputsRadioGroupBold">
+                        <span class="font-semibold mb-2">Cotización con IVA incluido</span>
+                        <mat-radio-group formControlName="tax_include" class="d-flex flex-row" [value]="'just-good'">
+                            <mat-radio-button class="mb-2" [value]="true">
+                                <span class="font-14-500-4B5062">Si</span>
+                            </mat-radio-button>
+                            <mat-radio-button class="mb-2" [value]="false">
+                                <span class="font-14-500-4B5062">No</span>
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+
+                <form *ngIf="optionFormValues?.length">
+                    <div *ngFor="let control of optionFormValues;  let i = index; first as isFirst">
+                        <div class="row mb-lg-0 mb-5 mb-sm-0 section-header-options">
+                            <div class="col-md-3">
+                                Opción {{ i + 1 }}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="flex inputsRadioGroup" style="display: flex; align-items: center;">
+                                    <span class="font-semibold font-16-700-646878">Tipo de precio</span>
+                                    <mat-radio-group [formControl]="control.typePriceControl" class="d-flex row">
+                                        <div class="col-md-5">
+                                            <mat-radio-button [value]="1" class="mb-2"> <span
+                                                    class="font-14-500-4B5062">Normal</span>
+                                            </mat-radio-button>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <mat-radio-button [value]="2" class="mb-2"> <span
+                                                    class="font-14-500-4B5062">Promoción</span>
+                                            </mat-radio-button>
+                                        </div>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!isFirst"
+                                class="col-md-1 d-flex align-items-center justify-content-end c-column-btns">
+                                <div class="btn-delete me-5" (click)="deleteOptionValue(i)">
+                                    <mat-icon matTooltip="Eliminar">delete</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form>
+                            <div class="row" *ngFor="let controlProduct of control.product; let productIndex = index;">
+                                <div class="col-md-2">
+                                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                        <mat-label>Lugares</mat-label>
+                                        <input class="text-right" [formControl]="controlProduct.placesControl"
+                                            type="number" min="1" matInput>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                        <mat-label>Producto</mat-label>
+                                        <mat-select [formControl]="controlProduct.productControl"
+                                            placeholder="Seleccionar">
+                                            <mat-option [value]="cat.product_id"
+                                                *ngFor="let cat of catProducts">{{cat?.code + ' - ' + cat?.name || '-'}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                        <mat-label>Precio unitario</mat-label>
+                                        <input class="text-right" [formControl]="controlProduct.unitPriceControl"
+                                            matInput 
+                                            (keyup)="onInputChange($event, i, productIndex)">
+                                        <span matPrefix>$</span>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                        <mat-label>Precio total</mat-label>
+                                        <input class="text-right" [formControl]="controlProduct.totalPriceControl"
+                                            matInput>
+                                        <span matPrefix>$</span>
+                                    </mat-form-field>
+                                </div>
+
+                                <div *ngIf="control.product?.length > 1"
+                                    class="col-md-1 d-flex align-items-center justify-content-center c-column-btns">
+                                    <div class="btn-delete mb-3" (click)="deleteProductValue(productIndex, i)">
+                                        <mat-icon matTooltip="Eliminar">delete</mat-icon>
+                                    </div>
+                                </div>
+                                <hr class="mt-3 mb-3" *ngIf="control.product?.length > 1">
+                            </div>
+                        </form>
+
+                        <div class="row mt-5 mb-5 d-flex justify-content-end">
+                            <div class="col-md-4 col-xl-3 col-12 d-flex justify-content-end">
+                                <button mat-flat-button class="btn-action-add btn-action-add-width"
+                                    (click)="addAdditionalProduct(i)">
+                                    <span>Agregar más ítems</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                    <mat-label>Subtotal</mat-label>
+                                    <input [formControl]="control.subtotalControl" class="text-right" matInput>
+                                    <span matPrefix>$</span>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                    <mat-label>Descuento</mat-label>
+                                    <input [formControl]="control.discountControl" class="text-right" type="number"
+                                        matInput>
+                                    <span matPrefix>$</span>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3" *ngIf="formData.get('tax_include')?.value">
+                                <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                    <mat-label>IVA</mat-label>
+                                    <input [formControl]="control.ivaControl" class="text-right" matInput>
+                                    <span matPrefix>$</span>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field class="flex-auto gt-xs:pr-3 inputNewRegister">
+                                    <mat-label>Total</mat-label>
+                                    <input [formControl]="control.totalControl" class="text-right" matInput>
+                                    <span matPrefix>$</span>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row promotion">
+                            <span>Vigencia opción {{ i + 1 }}</span>
+                            <div class="col-md-6">
+                                <div class="row p-0">
+                                    <div class="col-md-6">
+                                        <mat-form-field class="flex-auto inputNewRegister width-100">
+                                            <mat-label>Fecha</mat-label>
+                                            <input [formControl]="control.dateControl" matInput
+                                                [matDatepicker]="picker1">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mt-5 mb-5" *ngIf="optionFormValues?.length > 1">
+                    </div>
+                </form>
+
+                <div class="row d-flex mb-6 mt-6">
+                    <div class="col-md-4 col-xl-3 col-12">
+                        <button mat-flat-button class="btn-action-add btn-action-add-option-width"
+                            (click)="addFormOption()">
+                            <span>Agregar más opciones</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-end create mt-6">
+                    <div
+                        class="d-flex col-md-4 col-xl-3 col-12 d-flex justify-content-end pt-md-1 align-items-end mb-lg-0 mb-5 mb-sm-0">
+                        <button mat-flat-button class="btn-gray" (click)="newDataProduct()">
+                            <span>Crear nuevo producto</span>
+                        </button>
+                    </div>
+
+                    <div
+                        class="d-flex col-md-3 col-xl-2 col-12 d-flex justify-content-end pt-md-1 align-items-end mb-lg-0 mb-5 mb-sm-0">
+                        <button mat-flat-button class="btn-yellow" [disabled]="!canSave" (click)="actionSave()">
+                            <span>Guardar cotización</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -36,15 +36,15 @@ module.exports = plugin(({
             },
             '.bg-card'        : {
                 '--tw-bg-opacity': '1 !important',
-                backgroundColor  : 'rgba(var(--fuse-bg-card-rgb), var(--tw-bg-opacity)) !important',
+                backgroundColor  : 'rgba(var(--fuse-bg-card-rgb), var(--tw-bg-opacity))',
             },
             '.bg-default'     : {
                 '--tw-bg-opacity': '1 !important',
-                backgroundColor  : 'rgba(var(--fuse-bg-default-rgb), var(--tw-bg-opacity)) !important',
+                backgroundColor  : 'rgba(var(--fuse-bg-default-rgb), var(--tw-bg-opacity))',
             },
             '.bg-dialog'      : {
                 '--tw-bg-opacity': '1 !important',
-                backgroundColor  : 'rgba(var(--fuse-bg-dialog-rgb), var(--tw-bg-opacity)) !important',
+                backgroundColor  : 'rgba(var(--fuse-bg-dialog-rgb), var(--tw-bg-opacity))',
             },
             '.ring-bg-default': {
                 '--tw-ring-opacity': '1 !important',

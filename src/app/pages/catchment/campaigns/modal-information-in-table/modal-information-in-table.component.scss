@@ -1,0 +1,73 @@
+
+.c-moda-info {
+    .contenedor-scroll-tabla {
+        overflow-y: scroll !important;
+        height: 600px!important;
+        padding-right: 0;
+        position: relative;
+    }
+    .table-container {
+        overflow-y: auto; 
+        max-height: 580px;
+    }
+    
+    .table-container table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    .table-container th {
+        position: sticky;
+        top: 0;
+        background-color: white!important; 
+        z-index: 2;
+        box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1)!important;
+    }
+    
+    .table-container td, .table-container th {
+        padding: 8px;
+    }
+    
+    .tabla-personalizada-default {
+        th {
+            background: #1E293B!important;
+            height: 80px;
+        }
+    }
+
+    .modal-icon {
+        cursor: pointer;
+        position: absolute; 
+        right: 3%;
+        top: 2%;
+        color: #EDF1F5;
+    }
+
+    .table-column-contact {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+    }
+}
+
+.text-all {
+    font-size: 16px;
+    margin-top: 10px!important;
+    font-weight: 700;
+    color: #3487E9;
+    border-bottom: 1.5px solid #3487E9;
+    margin: auto;
+}
+
+.modal-lead {
+    margin: auto;
+    width: 100px;
+}
+
+.modal-contact {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

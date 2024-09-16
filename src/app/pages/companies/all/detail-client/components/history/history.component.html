@@ -1,0 +1,81 @@
+<div class="grid grid-cols-1 w-full min-w-0">
+    <div class="row d-flex">
+        <div class="d-flex col-md-6 col-xl-6 col-12 pt-md-2">
+            <div class="colum-table-select width-100">
+                <mat-form-field class="flex-auto width-100">
+                    <mat-label>Tipo de actividad</mat-label>
+                    <mat-select [formControl]="activityType" placeholder="Seleccionar">
+                        <mat-option value="">Todos</mat-option>
+                        <mat-option [value]="cat.type_activity_id" *ngFor="let cat of catActivityType">{{cat?.activity || '-'}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="d-flex col-md-6 col-xl-6 col-12 pt-md-2 justify-content-end align-items-center">
+            <button class="btn-yellow m-0" (click)="newActivity()">
+                <span>Agregar actividad</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="relative flex flex-col flex-auto min-w-0 overflow-hidden c-history">
+    <div class="flex flex-col flex-auto px-6">
+        <div class="w-full max-w-3xl">
+            <div class="mt-8 c-scroll">
+                <ol>
+                    <ng-container *ngFor="let activity of history; let i = index; let first = first; let last = last; trackBy: trackByFn">
+                        <ng-container *ngIf="first || !isSameDay(activity?.date, history[i - 1]?.date)">
+                          <li class="relative flex py-7">
+                            <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-4B5062 text-on-primary">
+                              {{activity?.date | titlecase}}
+                            </div>
+                          </li>
+                        </ng-container>
+                      
+                        <li class="relative flex py-7">
+                          <ng-container *ngIf="!last && history[i + 1] && isSameDay(activity?.date, history[i + 1]?.date)">
+                            <div class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600"></div>
+                          </ng-container>
+                      
+                          <div class="relative flex flex-auto">
+                            <ng-container>
+                              <div [style.background]="activity.color" class="flex shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full">
+                              </div>
+                            </ng-container>
+                      
+                            <div class="flex flex-col flex-auto items-start">
+                              <ng-container *ngIf="activity?.activity">
+                                <div class="history-title d-flex align-items-center">
+                                  <mat-icon class="column-icon">{{activity.icon}}</mat-icon>
+                                  {{activity.activityName }}
+                                </div>
+                              </ng-container>
+                      
+                              <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5">
+                                <div class="d-flex flex-column">
+                                  <div class="text-secondary">
+                                    {{activity.dateName | formatoFecha}}
+                                  </div>
+                      
+                                  <div class="history-agent">
+                                    {{activity.agent }}
+                                  </div>
+                                </div>
+                              </div>
+                      
+                              <ng-container *ngIf="activity.description">
+                                <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800">
+                                  {{activity.description}}
+                                </div>
+                              </ng-container>
+                            </div>
+                          </div>
+                        </li>
+                      </ng-container>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

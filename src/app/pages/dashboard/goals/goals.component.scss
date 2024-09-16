@@ -1,0 +1,48 @@
+.c-goals {
+    .icon-goal {
+        font-size: 50px;
+        width: 60px;
+        height: 36px;
+        color: white;
+        background: #00C292;
+    }
+
+    ::ng-deep .mdc-linear-progress__bar-inner {
+        border-color:#385A6D!important;
+        height: 5px;
+    }
+}
+
+.color-green-goals {
+    color: #008525;
+    font-size: 14px;
+    font-weight: 700;
+
+}
+
+.table-goals {
+    .contenedor-scroll-tabla {
+        height: unset!important;
+    }
+    .table-goals {
+        height: 400px!important;
+        th:nth-child(1) {
+            min-width: 400px !important;
+            max-width: 450px !important;
+        }
+        th:nth-child(2) {
+            min-width: 100px !important;
+            max-width: 200px !important;
+        }
+        th:nth-child(3) {
+            min-width: 100px !important;
+            max-width: 200px !important;
+        }
+
+        th:nth-child(4) {
+            min-width: 100px !important;
+            max-width: 100px !important;
+        }
+    
+    }
+}

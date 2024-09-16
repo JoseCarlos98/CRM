@@ -1,0 +1,58 @@
+<style>
+#my-dropzone {
+    border: 2px dashed #636363;
+    background-color: #edf1f5;
+    padding: 20px;
+    min-height: 200px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Añade posición relativa para que el contenido se posicione correctamente */
+}
+
+.dropzone-content {
+    text-align: center;
+    position: absolute; /* Posiciona el contenido dentro del dropzone */
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Centra exactamente */
+    z-index: 1; /* Asegura que el contenido esté por encima de la miniatura */
+}
+
+.dropzone-text {
+    margin-top: 10px;
+}
+
+</style>
+<div class="container-fluid p-0 overflow-hidden c-modal-document-pay">
+    <div class="modal-header">
+        <p class="titulo-modal">Cargar comprobante de pago</p>
+        <mat-icon class="cursos-pointer" svgIcon="mat_outline:cancel" (click)="closeModal()"></mat-icon>
+    </div>
+
+    <div class="row p-5 d-flex">
+        <form class="col-12">
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="my-dropzone" class="dropzone-container">
+                            <div #dropzoneContent class="dropzone-content">
+                                <mat-icon class="icon-size-6" svgIcon="mat_solid:upload"></mat-icon>
+                                <p class="dropzone-text">Arrastre o seleccione los archivos que desea subir</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center create mb-5 mt-2">
+                    <div class="d-flex justify-content-center col-md-4 col-xl-4 col-12 pt-md-2">
+                        <button class="btn-action-add" (click)="closeModal()">
+                            <span>Subir archivos</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

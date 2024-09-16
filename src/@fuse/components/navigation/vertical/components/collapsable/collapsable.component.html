@@ -4,23 +4,23 @@
     [ngClass]="item.classes?.wrapper">
 
     <div
-        class="fuse-vertical-navigation-item"
+        class="fuse-vertical-navigation-item "
         [ngClass]="{'fuse-vertical-navigation-item-disabled': item.disabled}"
         [matTooltip]="item.tooltip || ''"
         (click)="toggleCollapsable()">
 
         <!-- Icon -->
-        <ng-container *ngIf="item.icon">
+        <ng-container *ngIf="item?.icon || item?.iconGoogleFonts">
             <mat-icon
-                class="fuse-vertical-navigation-item-icon"
+                class="colorMenu fuse-vertical-navigation-item-icon"
                 [ngClass]="item.classes?.icon"
-                [svgIcon]="item.icon"></mat-icon>
+                [svgIcon]="item?.icon || null"> {{ item?.icon || item?.iconGoogleFonts }}</mat-icon>
         </ng-container>
 
         <!-- Title & Subtitle -->
         <div class="fuse-vertical-navigation-item-title-wrapper">
             <div class="fuse-vertical-navigation-item-title">
-                <span [ngClass]="item.classes?.title">
+                <span [ngClass]="item.classes?.title" class="colorMenu">
                     {{item.title}}
                 </span>
             </div>
@@ -46,7 +46,7 @@
 
         <!-- Arrow -->
         <mat-icon
-            class="fuse-vertical-navigation-item-arrow icon-size-4"
+            class="colorMenu fuse-vertical-navigation-item-arrow icon-size-4"
             [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
 
     </div>

@@ -1,0 +1,64 @@
+.c-emails {
+
+    .send-emails {
+        color: white;
+        background: #006895;
+    }
+
+    .email-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #646878;
+    }
+
+    .email-agent {
+        font-size: 14px;
+        font-weight: 700;
+        color: #646878;
+        margin-top: 5px;
+    }
+
+    .email-header {
+        display: flex;
+        align-items: center;
+        min-width: 261px;
+        width: auto;
+        justify-content: space-between;
+
+        .time {
+            width: 61px;
+            height: 20px;
+            font-size: 12px;
+            font-weight: 400;
+            text-align: center;
+            color: #686B84;
+            border-radius: 10px;
+            border: 1px solid #BEBFCB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+    }
+
+    .email-comment {
+        width: 261px;
+        min-height: 78px;
+        height: auto;
+        top: 200px;
+        left: 126px;
+        padding: 5px, 9px, 52px, 9px;
+        border-radius: 10px;
+        background: #FFFFFF;
+        box-shadow: -1px 4px 10px 0px #00000040;
+        font-size: 14px;
+        font-weight: 400;
+        text-align: left;
+        text-align: left;
+        color: #646878;
+    }
+
+    .cursor-inbox {
+        cursor: pointer;
+    }
+}
